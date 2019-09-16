@@ -31,12 +31,12 @@ always @(*) begin
     end
     else if (type_A == INF) begin
         special_case = 1'b1;
-        if (type_B = NORMAL || type_B == SUBNORMAL) begin
+        if (type_B == NORMAL || type_B == SUBNORMAL) begin
             result = {sign_A, exp_A, mantis_A};
         end
         else if (type_B == INF) begin
             if (sign_A == sign_B) result = {sign_B, exp_B, mantis_B};
-            else                  result = {1'b1, 0xFF, 23'h000001};
+            else                  result = {1'b1, 8'hFF, 23'h000001};
         end
     end
     else if (type_B == INF) begin

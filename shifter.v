@@ -9,12 +9,12 @@ output reg [27:0] mantis_out;
 generate
 if (!MODE) begin
     exp_out = exp + shift_number;
-    mantis_out = mantis >> shift_number;
+    mantis_out = (mantis >> shift_number);
 end
 else begin
     exp_out = exp - shift_number;
-    mantis_out = mantis << shift_number;
+    mantis_out = (mantis << shift_number);
 end
 endgenerate
 
-end
+endmodule
