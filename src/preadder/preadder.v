@@ -71,7 +71,7 @@ init_number __init_number
     .type_A (type_A),
     .type_B(type_B),
     .exp(exp),
-    .mantis_gread(mantis_great),
+    .mantis_great(mantis_great),
     .mantis_small(mantis_small)
 );
 

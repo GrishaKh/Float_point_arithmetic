@@ -19,7 +19,7 @@ always @(*) begin
         else             type = NORMAL;
     end
     else begin
-        if (|mantis)     type = SUNNORMAL;
+        if (|mantis)     type = SUBNORMAL;
         else             type = ZERO;
     end
 end
