@@ -1,12 +1,12 @@
 module preadder (
     number_A, number_B,
-    sign, exp,
+    sign_A, sign_B, exp,
     mantis_great, mantis_small,
     special_result, special_case
 );
 
 input [31:0] number_A, number_B;
-output sign;
+output sign_A, sign_B;
 output [7:0] exp;
 output [27:0] mantis_great, mantis_small;
 output [31:0] special_result;
@@ -72,7 +72,8 @@ init_number __init_number
     .mantis_B(mantis_B),
     .type_A (type_A),
     .type_B(type_B),
-    .sign (sign),
+    .out_sign_A (sign_A),
+    .out_sign_B (sign_B),
     .exp(exp),
     .mantis_great(mantis_great),
     .mantis_small(mantis_small)
