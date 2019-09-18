@@ -48,14 +48,13 @@ shift_selector __shift_selector (
     .mantis_shift (mantis_shift),
     .mantis_out (mantis_nonshift),
     .exp_shift (exp_shift),
-    .diff_exp (diff_exp)
+    .exp_out (exp)
 );
 
-shifter __shifter (
+shifter #(.MODE(1)) __shifter (
     .exp (exp_shift),
     .mantis (mantis_shift),
-    .shift_number (diff_exp),
-    .exp_out (exp),
+    .exp_target_or_diff (exp),
     .mantis_out (mantis_shifted)
 );
 

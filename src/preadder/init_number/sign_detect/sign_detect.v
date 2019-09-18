@@ -10,6 +10,6 @@ input comp_code_mantis, comp_code_exp;
 input [27:0] mantis_A, mantis_B;
 output sign;
 
-assign sign = (sign_A^sign_B) & (comp_code_mantis^comp_code_expuuytrewq ) ? sign_B : sign_A;
+assign sign = (sign_A^sign_B) & (comp_code_mantis^comp_code_exp) ? sign_B : sign_A;
 
 endmodule
