@@ -1,13 +1,17 @@
 module init_number (
+    sign_A, sign_B,
     exp_A, exp_B,
     mantis_A, mantis_B,
     type_A, type_B,
-    exp, mantis_great, mantis_small
+    sign, exp, 
+    mantis_great, mantis_small
 );
 
+input sign_A, sign_B;
 input [7:0] exp_A, exp_B;
 input [22:0] mantis_A, mantis_B;
 input [2:0] type_A, type_B;
+output sign;
 output [7:0] exp;
 output [27:0] mantis_great, mantis_small;
 
@@ -59,6 +63,16 @@ comparator #(.SIZE(28)) __comparator_mantis (
     .in_A (mantis_nonshift),
     .in_B (mantis_shifted),
     .out_code(code_mantis)
+);
+
+sign_detect __sign_detect (
+    .sign_A (sign_A),
+    .sign_B (sign_B),
+    .mantis_A (mantis_nonshift),
+    .mantis_B (mantis_shifted),
+    .comp_code_mantis (code_mantis),
+    .comp_code_exp (code_exp),
+    .sign (sign)
 );
 
 swap __swap (

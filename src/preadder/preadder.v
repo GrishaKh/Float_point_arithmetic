@@ -64,12 +64,15 @@ special_cases __special_cases
 
 init_number __init_number
 (
+    .sign_A (sign_A),
+    .sign_B (sign_B),
     .exp_A(exp_A),
     .exp_B(exp_B),
     .mantis_A(mantis_A),
     .mantis_B(mantis_B),
     .type_A (type_A),
     .type_B(type_B),
+    .sign (sign),
     .exp(exp),
     .mantis_great(mantis_great),
     .mantis_small(mantis_small)
