@@ -1,6 +1,6 @@
 module shifter (exp, mantis, exp_target_or_diff, exp_out, mantis_out);
-parameter DIRECTION = 0; // 0-right, 1-left
-parameter MODE      = 0; // 0-diff,  1-exp_target
+parameter DIRECTION = 0; // 0-left, 1-right
+parameter MODE      = 0; // 0-diff, 1-exp_target
 
 input [7:0] exp, exp_target_or_diff;
 input [27:0] mantis;
@@ -15,7 +15,8 @@ generate
         assign shift_number = exp_target_or_diff - exp;
     end
     else begin
-        assign exp_out = exp + -1*DIRECTION*exp_target_or_diff;
+        if (DIRECTION) assign exp_out = exp + exp_target_or_diff;
+        else           assign exp_out = exp - exp_target_or_diff;
         assign shift_number = exp_target_or_diff;
     end
     if (DIRECTION) assign mantis_out = (mantis << shift_number);

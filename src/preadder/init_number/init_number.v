@@ -3,7 +3,7 @@ module init_number (
     exp_A, exp_B,
     mantis_A, mantis_B,
     type_A, type_B,
-    out_sign_A, out_sign_B, exp, 
+    sign_of_great, sign_of_small, exp, 
     mantis_great, mantis_small
 );
 
@@ -11,14 +11,14 @@ input sign_A, sign_B;
 input [7:0] exp_A, exp_B;
 input [22:0] mantis_A, mantis_B;
 input [2:0] type_A, type_B;
-output out_sign_A, out_sign_B;
+output sign_of_great, sign_of_small;
 output [7:0] exp;
 output [27:0] mantis_great, mantis_small;
 
 wire [27:0] mantis_ext_A, mantis_ext_B;
 wire [27:0] mantis_shift, mantis_nonshift;
 wire [27:0] mantis_shifted;
-wire [7:0] diff_exp, exp_shift;
+wire [7:0] exp_shift;
 wire code_exp, code_mantis;
 
 extender __extender_A (
@@ -51,7 +51,7 @@ shift_selector __shift_selector (
     .exp_out (exp)
 );
 
-shifter #(.MODE(1)) __shifter (
+shifter #(.MODE(1), .DIRECTION(1)) __shifter (
     .exp (exp_shift),
     .mantis (mantis_shift),
     .exp_target_or_diff (exp),
@@ -59,23 +59,23 @@ shifter #(.MODE(1)) __shifter (
 );
 
 comparator #(.SIZE(28)) __comparator_mantis (
-    .in_A (mantis_nonshift),
-    .in_B (mantis_shifted),
+    .in_A (mantis_shifted),
+    .in_B (mantis_nonshift),
     .out_code(code_mantis)
 );
 
 swap #(.SIZE(1)) __swap_sign (
-    .comp_code (code_exp),
+    .comp_code (code_exp^code_mantis),
     .in_A (sign_A),
     .in_B (sign_B),
-    .out_great (out_sign_A),
-    .out_small (out_sign_B)
+    .out_great (sign_of_great),
+    .out_small (sign_of_small)
 );
 
 swap __swap_mantis (
     .comp_code (code_mantis),
-    .in_A (mantis_nonshift),
-    .in_B (mantis_shifted),
+    .in_A (mantis_shifted),
+    .in_B (mantis_nonshift),
     .out_great (mantis_great),
     .out_small (mantis_small)
 );

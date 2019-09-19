@@ -5,7 +5,7 @@ module fpa_tb;
 reg [31:0] number_A, number_B;
 wire sign;
 wire [7:0] exp;
-wire [27:0] mantis;
+wire [22:0] mantis;
 
 fpa __fpa (
     .number_A (number_A),
@@ -16,25 +16,31 @@ fpa __fpa (
 );
 
 initial begin
-    repeat (1000) begin
+    repeat (10000) begin
         number_A = $random;
         number_B = $random;
 
-        number_A[31] = 1'b0;
-        number_B[31] = 1'b0;
+        // number_A[31] = 1'b0;
+        // number_B[31] = 1'b0;
         #5;
 
         $display ("number_A = %b", number_A);
         $display ("number_B = %b", number_B);
-        $display ("{sign, exp, mantis} = %b", {sign, exp, mantis});
-        $write ("\n ******************************* \n");
+        $display ("out_test = %b", {sign, exp, mantis});
+        /*$display ("out_real = %b", $shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)));
+        
+        if ($shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)) == {sign, exp, mantis})
+        begin
+            $display ("Pass");
+        end else begin
+            $display ("Fail");
+        end*/
 
-        if (~mantis[4] & mantis[3] & (&(~mantis[2:0]))) begin
-            $display ("hasav");
-            $finish;
-        end
+        $write ("\n ******************************* \n");
         #5;
     end
+
+    $finish;
 end
 
 endmodule
