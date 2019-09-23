@@ -1,0 +1,844 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision - 12;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x27329f0 .scope module, "fpa_tb" "fpa_tb" 2 3;
+ .timescale -9 -12;
+v0x275f610_0 .net "exp", 7 0, L_0x2760050; 1 drivers
+v0x275f690_0 .net "mantis", 22 0, L_0x27600f0; 1 drivers
+v0x275f710_0 .var "number_A", 31 0;
+v0x275f790_0 .var "number_B", 31 0;
+v0x275f810_0 .net "sign", 0 0, L_0x275ffb0; 1 drivers
+S_0x273a1d0 .scope module, "__fpa" "fpa" 2 10, 3 1, S_0x27329f0;
+ .timescale -9 -12;
+v0x275e880_0 .net *"_s4", 31 0, L_0x2760190; 1 drivers
+v0x275e900_0 .net *"_s6", 31 0, L_0x27602c0; 1 drivers
+v0x275e980_0 .alias "exp", 7 0, v0x275f610_0;
+v0x275ea00_0 .net "exp_out", 7 0, L_0x2763dd0; 1 drivers
+v0x275ea80_0 .net "exp_preadder", 7 0, v0x2759510_0; 1 drivers
+v0x275eb00_0 .net "exp_tmp", 7 0, L_0x2762e00; 1 drivers
+v0x275ec10_0 .alias "mantis", 22 0, v0x275f690_0;
+v0x275ec90_0 .net "mantis_great", 27 0, L_0x2762020; 1 drivers
+v0x275eda0_0 .net "mantis_out", 22 0, L_0x27632c0; 1 drivers
+v0x275ee20_0 .net "mantis_small", 27 0, L_0x27620c0; 1 drivers
+v0x275ef30_0 .net "mantis_tmp", 27 0, L_0x2762ef0; 1 drivers
+v0x275f040_0 .net "number_A", 31 0, v0x275f710_0; 1 drivers
+v0x275f0c0_0 .net "number_B", 31 0, v0x275f790_0; 1 drivers
+v0x275f140_0 .alias "sign", 0 0, v0x275f810_0;
+v0x275f240_0 .net "sign_of_great", 0 0, L_0x2761d60; 1 drivers
+v0x275f350_0 .net "sign_of_small", 0 0, L_0x2761e00; 1 drivers
+v0x275f1c0_0 .net "sign_out", 0 0, L_0x27613b0; 1 drivers
+v0x275f4f0_0 .net "special_case", 0 0, v0x275c5d0_0; 1 drivers
+v0x275f3d0_0 .net "special_result", 31 0, v0x275c370_0; 1 drivers
+L_0x275ffb0 .part L_0x27602c0, 31, 1;
+L_0x2760050 .part L_0x27602c0, 23, 8;
+L_0x27600f0 .part L_0x27602c0, 0, 23;
+L_0x2760190 .concat [ 23 8 1 0], L_0x27632c0, L_0x2763dd0, L_0x27613b0;
+L_0x27602c0 .functor MUXZ 32, L_0x2760190, v0x275c370_0, v0x275c5d0_0, C4<>;
+S_0x2757c90 .scope module, "__preadder" "preadder" 3 17, 4 1, S_0x273a1d0;
+ .timescale -9 -12;
+v0x275dc70_0 .alias "exp", 7 0, v0x275ea80_0;
+v0x275dd10_0 .net "exp_A", 7 0, L_0x2760490; 1 drivers
+v0x275dd90_0 .net "exp_B", 7 0, L_0x2760810; 1 drivers
+v0x275de10_0 .net "mantis_A", 22 0, L_0x2760530; 1 drivers
+v0x275de90_0 .net "mantis_B", 22 0, L_0x27608b0; 1 drivers
+v0x275df10_0 .alias "mantis_great", 27 0, v0x275ec90_0;
+v0x275dfd0_0 .alias "mantis_small", 27 0, v0x275ee20_0;
+v0x275e050_0 .alias "number_A", 31 0, v0x275f040_0;
+v0x275e0d0_0 .alias "number_B", 31 0, v0x275f0c0_0;
+v0x275e150_0 .net "sign_A", 0 0, L_0x27603f0; 1 drivers
+v0x275e2c0_0 .net "sign_B", 0 0, L_0x2760770; 1 drivers
+v0x275e3d0_0 .alias "sign_of_great", 0 0, v0x275f240_0;
+v0x275e450_0 .alias "sign_of_small", 0 0, v0x275f350_0;
+v0x275e4d0_0 .alias "special_case", 0 0, v0x275f4f0_0;
+v0x275e5d0_0 .alias "special_result", 31 0, v0x275f3d0_0;
+v0x275e650_0 .net "type_A", 2 0, v0x275d370_0; 1 drivers
+v0x275e550_0 .net "type_B", 2 0, v0x275cd50_0; 1 drivers
+S_0x275d830 .scope module, "__number_A" "div_number" 4 21, 5 1, S_0x2757c90;
+ .timescale -9 -12;
+L_0x27605d0 .functor BUFZ 32, v0x275f710_0, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>;
+v0x275d920_0 .net *"_s5", 31 0, L_0x27605d0; 1 drivers
+v0x275d9e0_0 .alias "exp", 7 0, v0x275dd10_0;
+v0x275da60_0 .alias "mantis", 22 0, v0x275de10_0;
+v0x275db70_0 .alias "number", 31 0, v0x275f040_0;
+v0x275dbf0_0 .alias "sign", 0 0, v0x275e150_0;
+L_0x27603f0 .part L_0x27605d0, 31, 1;
+L_0x2760490 .part L_0x27605d0, 23, 8;
+L_0x2760530 .part L_0x27605d0, 0, 23;
+S_0x275d3f0 .scope module, "__number_B" "div_number" 4 29, 5 1, S_0x2757c90;
+ .timescale -9 -12;
+L_0x2760950 .functor BUFZ 32, v0x275f790_0, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>, C4<00000000000000000000000000000000>;
+v0x275d4e0_0 .net *"_s5", 31 0, L_0x2760950; 1 drivers
+v0x275d5a0_0 .alias "exp", 7 0, v0x275dd90_0;
+v0x275d620_0 .alias "mantis", 22 0, v0x275de90_0;
+v0x275d730_0 .alias "number", 31 0, v0x275f0c0_0;
+v0x275d7b0_0 .alias "sign", 0 0, v0x275e2c0_0;
+L_0x2760770 .part L_0x2760950, 31, 1;
+L_0x2760810 .part L_0x2760950, 23, 8;
+L_0x27608b0 .part L_0x2760950, 0, 23;
+S_0x275cdd0 .scope module, "__type_A" "type_detect" 4 37, 6 1, S_0x2757c90;
+ .timescale -9 -12;
+P_0x275cec8 .param/l "INF" 6 8, C4<001>;
+P_0x275cef0 .param/l "NAN" 6 11, C4<100>;
+P_0x275cf18 .param/l "NORMAL" 6 10, C4<011>;
+P_0x275cf40 .param/l "SUBNORMAL" 6 9, C4<010>;
+P_0x275cf68 .param/l "ZERO" 6 7, C4<000>;
+v0x275d1c0_0 .alias "exp", 7 0, v0x275dd10_0;
+v0x275d2f0_0 .alias "mantis", 22 0, v0x275de10_0;
+v0x275d370_0 .var "type", 2 0;
+E_0x2758740 .event edge, v0x27593d0_0, v0x275ac30_0;
+S_0x275c7f0 .scope module, "__type_B" "type_detect" 4 44, 6 1, S_0x2757c90;
+ .timescale -9 -12;
+P_0x275c8e8 .param/l "INF" 6 8, C4<001>;
+P_0x275c910 .param/l "NAN" 6 11, C4<100>;
+P_0x275c938 .param/l "NORMAL" 6 10, C4<011>;
+P_0x275c960 .param/l "SUBNORMAL" 6 9, C4<010>;
+P_0x275c988 .param/l "ZERO" 6 7, C4<000>;
+v0x275cba0_0 .alias "exp", 7 0, v0x275dd90_0;
+v0x275ccd0_0 .alias "mantis", 22 0, v0x275de90_0;
+v0x275cd50_0 .var "type", 2 0;
+E_0x2758690 .event edge, v0x2759470_0, v0x275a370_0;
+S_0x275bdf0 .scope module, "__special_cases" "special_cases" 4 51, 7 1, S_0x2757c90;
+ .timescale -9 -12;
+P_0x275bee8 .param/l "INF" 7 11, C4<001>;
+P_0x275bf10 .param/l "NAN" 7 14, C4<100>;
+P_0x275bf38 .param/l "NORMAL" 7 13, C4<011>;
+P_0x275bf60 .param/l "SUBNORMAL" 7 12, C4<010>;
+P_0x275bf88 .param/l "ZERO" 7 10, C4<000>;
+v0x275c0d0_0 .alias "exp_A", 7 0, v0x275dd10_0;
+v0x275c150_0 .alias "exp_B", 7 0, v0x275dd90_0;
+v0x275c1d0_0 .alias "mantis_A", 22 0, v0x275de10_0;
+v0x275c2a0_0 .alias "mantis_B", 22 0, v0x275de90_0;
+v0x275c370_0 .var "result", 31 0;
+v0x275c3f0_0 .alias "sign_A", 0 0, v0x275e150_0;
+v0x275c500_0 .alias "sign_B", 0 0, v0x275e2c0_0;
+v0x275c5d0_0 .var "special_case", 0 0;
+v0x275c6a0_0 .alias "type_A", 2 0, v0x275e650_0;
+v0x275c770_0 .alias "type_B", 2 0, v0x275e550_0;
+E_0x2755cb0/0 .event edge, v0x275adb0_0, v0x275a4f0_0, v0x2758540_0, v0x2759470_0;
+E_0x2755cb0/1 .event edge, v0x275a370_0, v0x27584a0_0, v0x27593d0_0, v0x275ac30_0;
+E_0x2755cb0 .event/or E_0x2755cb0/0, E_0x2755cb0/1;
+S_0x2757d80 .scope module, "__init_number" "init_number" 4 65, 8 1, S_0x2757c90;
+ .timescale -9 -12;
+L_0x2761ea0 .functor XOR 1, L_0x27617b0, L_0x2761cc0, C4<0>, C4<0>;
+v0x275ae30_0 .net "code_exp", 0 0, L_0x27617b0; 1 drivers
+v0x275aed0_0 .net "code_mantis", 0 0, L_0x2761cc0; 1 drivers
+v0x275afa0_0 .alias "exp", 7 0, v0x275ea80_0;
+v0x275b0b0_0 .alias "exp_A", 7 0, v0x275dd10_0;
+v0x275b130_0 .alias "exp_B", 7 0, v0x275dd90_0;
+v0x275b200_0 .net "exp_shift", 7 0, v0x27595c0_0; 1 drivers
+v0x275b2d0_0 .alias "mantis_A", 22 0, v0x275de10_0;
+v0x275b350_0 .alias "mantis_B", 22 0, v0x275de90_0;
+v0x275b420_0 .net "mantis_ext_A", 27 0, L_0x2760f90; 1 drivers
+v0x275b4f0_0 .net "mantis_ext_B", 27 0, L_0x2761620; 1 drivers
+v0x275b5d0_0 .alias "mantis_great", 27 0, v0x275ec90_0;
+v0x275b6a0_0 .net "mantis_nonshift", 27 0, v0x27597b0_0; 1 drivers
+v0x275b720_0 .net "mantis_shift", 27 0, v0x27598d0_0; 1 drivers
+v0x275b7f0_0 .net "mantis_shifted", 27 0, L_0x2761c20; 1 drivers
+v0x275b8f0_0 .alias "mantis_small", 27 0, v0x275ee20_0;
+v0x275b9c0_0 .alias "sign_A", 0 0, v0x275e150_0;
+v0x275b870_0 .alias "sign_B", 0 0, v0x275e2c0_0;
+v0x275bad0_0 .alias "sign_of_great", 0 0, v0x275f240_0;
+v0x275bbf0_0 .alias "sign_of_small", 0 0, v0x275f350_0;
+v0x275bcc0_0 .alias "type_A", 2 0, v0x275e650_0;
+v0x275bb50_0 .alias "type_B", 2 0, v0x275e550_0;
+S_0x275a570 .scope module, "__extender_A" "extender" 8 24, 9 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x275a188 .param/l "NORMAL" 9 7, C4<011>;
+v0x275a6e0_0 .net *"_s0", 2 0, C4<011>; 1 drivers
+v0x275a780_0 .net *"_s10", 0 0, C4<0>; 1 drivers
+v0x275a820_0 .net *"_s12", 3 0, C4<0000>; 1 drivers
+v0x275a8c0_0 .net *"_s14", 27 0, L_0x2760d80; 1 drivers
+v0x275a970_0 .net *"_s2", 0 0, L_0x2760b10; 1 drivers
+v0x275aa10_0 .net *"_s4", 0 0, C4<1>; 1 drivers
+v0x275aaf0_0 .net *"_s6", 3 0, C4<0000>; 1 drivers
+v0x275ab90_0 .net *"_s8", 27 0, L_0x2760c30; 1 drivers
+v0x275ac30_0 .alias "mantis", 22 0, v0x275de10_0;
+v0x275acd0_0 .alias "mantis_out", 27 0, v0x275b420_0;
+v0x275adb0_0 .alias "type_number", 2 0, v0x275e650_0;
+L_0x2760b10 .cmp/eq 3, v0x275d370_0, C4<011>;
+L_0x2760c30 .concat [ 4 23 1 0], C4<0000>, L_0x2760530, C4<1>;
+L_0x2760d80 .concat [ 4 23 1 0], C4<0000>, L_0x2760530, C4<0>;
+L_0x2760f90 .functor MUXZ 28, L_0x2760d80, L_0x2760c30, L_0x2760b10, C4<>;
+S_0x2759c80 .scope module, "__extender_B" "extender" 8 30, 9 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x2759d78 .param/l "NORMAL" 9 7, C4<011>;
+v0x2759df0_0 .net *"_s0", 2 0, C4<011>; 1 drivers
+v0x2759e70_0 .net *"_s10", 0 0, C4<0>; 1 drivers
+v0x2759f10_0 .net *"_s12", 3 0, C4<0000>; 1 drivers
+v0x2759fb0_0 .net *"_s14", 27 0, L_0x2761410; 1 drivers
+v0x275a060_0 .net *"_s2", 0 0, L_0x2761070; 1 drivers
+v0x275a100_0 .net *"_s4", 0 0, C4<1>; 1 drivers
+v0x275a1e0_0 .net *"_s6", 3 0, C4<0000>; 1 drivers
+v0x275a280_0 .net *"_s8", 27 0, L_0x2761230; 1 drivers
+v0x275a370_0 .alias "mantis", 22 0, v0x275de90_0;
+v0x275a410_0 .alias "mantis_out", 27 0, v0x275b4f0_0;
+v0x275a4f0_0 .alias "type_number", 2 0, v0x275e550_0;
+L_0x2761070 .cmp/eq 3, v0x275cd50_0, C4<011>;
+L_0x2761230 .concat [ 4 23 1 0], C4<0000>, L_0x27608b0, C4<1>;
+L_0x2761410 .concat [ 4 23 1 0], C4<0000>, L_0x27608b0, C4<0>;
+L_0x2761620 .functor MUXZ 28, L_0x2761410, L_0x2761230, L_0x2761070, C4<>;
+S_0x2759950 .scope module, "__comparator_exp" "comparator" 8 36, 10 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x27596f8 .param/l "SIZE" 10 2, +C4<01000>;
+v0x2759aa0_0 .alias "in_A", 7 0, v0x275dd10_0;
+v0x2759b20_0 .alias "in_B", 7 0, v0x275dd90_0;
+v0x2759bd0_0 .alias "out_code", 0 0, v0x275ae30_0;
+L_0x27617b0 .cmp/ge 8, L_0x2760490, L_0x2760810;
+S_0x2759200 .scope module, "__shift_selector" "shift_selector" 8 42, 11 1, S_0x2757d80;
+ .timescale -9 -12;
+v0x2759310_0 .alias "comp_code", 0 0, v0x275ae30_0;
+v0x27593d0_0 .alias "exp_A", 7 0, v0x275dd10_0;
+v0x2759470_0 .alias "exp_B", 7 0, v0x275dd90_0;
+v0x2759510_0 .var "exp_out", 7 0;
+v0x27595c0_0 .var "exp_shift", 7 0;
+v0x2759670_0 .alias "mantis_A", 27 0, v0x275b420_0;
+v0x2759730_0 .alias "mantis_B", 27 0, v0x275b4f0_0;
+v0x27597b0_0 .var "mantis_out", 27 0;
+v0x27598d0_0 .var "mantis_shift", 27 0;
+E_0x27546f0/0 .event edge, v0x2759310_0, v0x2759730_0, v0x2759670_0, v0x2759470_0;
+E_0x27546f0/1 .event edge, v0x27593d0_0;
+E_0x27546f0 .event/or E_0x27546f0/0, E_0x27546f0/1;
+S_0x2758ac0 .scope module, "__shifter" "shifter" 8 54, 12 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x2757378 .param/l "DIRECTION" 12 2, +C4<01>;
+P_0x27573a0 .param/l "MODE" 12 3, +C4<01>;
+v0x2758e10_0 .alias "exp", 7 0, v0x275b200_0;
+v0x2758eb0_0 .net "exp_out", 7 0, L_0x275d260; 1 drivers
+v0x2758f50_0 .alias "exp_target_or_diff", 7 0, v0x275ea80_0;
+v0x2758fd0_0 .alias "mantis", 27 0, v0x275b720_0;
+v0x2759050_0 .alias "mantis_out", 27 0, v0x275b7f0_0;
+v0x2759120_0 .net "shift_number", 7 0, L_0x2761a70; 1 drivers
+L_0x2761a70 .arith/sub 8, v0x2759510_0, v0x27595c0_0;
+S_0x2758d20 .scope generate, "genblk1" "genblk1" 12 13, 12 13, S_0x2758ac0;
+ .timescale -9 -12;
+L_0x275d260 .functor BUFZ 8, v0x2759510_0, C4<00000000>, C4<00000000>, C4<00000000>;
+S_0x2758c30 .scope generate, "genblk5" "genblk5" 12 22, 12 22, S_0x2758ac0;
+ .timescale -9 -12;
+L_0x2761c20 .shift/l 28, v0x27598d0_0, L_0x2761a70;
+S_0x2758770 .scope module, "__comparator_mantis" "comparator" 8 61, 10 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x2758868 .param/l "SIZE" 10 2, +C4<011100>;
+v0x27588e0_0 .alias "in_A", 27 0, v0x275b7f0_0;
+v0x2758960_0 .alias "in_B", 27 0, v0x275b6a0_0;
+v0x2758a10_0 .alias "out_code", 0 0, v0x275aed0_0;
+L_0x2761cc0 .cmp/ge 28, L_0x2761c20, v0x27597b0_0;
+S_0x27582b0 .scope module, "__swap_sign" "swap" 8 67, 13 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x27583a8 .param/l "SIZE" 13 2, +C4<01>;
+v0x2758420_0 .net "comp_code", 0 0, L_0x2761ea0; 1 drivers
+v0x27584a0_0 .alias "in_A", 0 0, v0x275e150_0;
+v0x2758540_0 .alias "in_B", 0 0, v0x275e2c0_0;
+v0x27585e0_0 .alias "out_great", 0 0, v0x275f240_0;
+v0x27586c0_0 .alias "out_small", 0 0, v0x275f350_0;
+L_0x2761d60 .functor MUXZ 1, L_0x2760770, L_0x27603f0, L_0x2761ea0, C4<>;
+L_0x2761e00 .functor MUXZ 1, L_0x27603f0, L_0x2760770, L_0x2761ea0, C4<>;
+S_0x2757e70 .scope module, "__swap_mantis" "swap" 8 75, 13 1, S_0x2757d80;
+ .timescale -9 -12;
+P_0x2757068 .param/l "SIZE" 13 2, +C4<011100>;
+v0x2757f80_0 .alias "comp_code", 0 0, v0x275aed0_0;
+v0x2758040_0 .alias "in_A", 27 0, v0x275b7f0_0;
+v0x27580e0_0 .alias "in_B", 27 0, v0x275b6a0_0;
+v0x2758180_0 .alias "out_great", 27 0, v0x275ec90_0;
+v0x2758200_0 .alias "out_small", 27 0, v0x275ee20_0;
+L_0x2762020 .functor MUXZ 28, v0x27597b0_0, L_0x2761c20, L_0x2761cc0, C4<>;
+L_0x27620c0 .functor MUXZ 28, L_0x2761c20, v0x27597b0_0, L_0x2761cc0, C4<>;
+S_0x2756310 .scope module, "__adder" "adder" 3 29, 14 1, S_0x273a1d0;
+ .timescale -9 -12;
+L_0x27622a0 .functor XOR 1, L_0x2761d60, L_0x2761e00, C4<0>, C4<0>;
+L_0x27613b0 .functor BUFZ 1, L_0x2761d60, C4<0>, C4<0>, C4<0>;
+v0x2756cc0_0 .net *"_s12", 0 0, C4<0>; 1 drivers
+v0x2756d80_0 .net *"_s13", 28 0, L_0x2762550; 1 drivers
+v0x2756e20_0 .net *"_s15", 28 0, L_0x2762760; 1 drivers
+v0x2756ec0_0 .net *"_s18", 0 0, C4<0>; 1 drivers
+v0x2756f40_0 .net *"_s19", 28 0, L_0x27628d0; 1 drivers
+v0x2756fe0_0 .net *"_s22", 0 0, C4<0>; 1 drivers
+v0x27570c0_0 .net *"_s23", 28 0, L_0x2762a80; 1 drivers
+v0x2757160_0 .net *"_s25", 28 0, L_0x2762c10; 1 drivers
+v0x2757250_0 .net *"_s29", 6 0, C4<0000000>; 1 drivers
+v0x27572f0_0 .net *"_s3", 0 0, L_0x27622a0; 1 drivers
+v0x27573f0_0 .net *"_s5", 28 0, L_0x2762300; 1 drivers
+v0x2757490_0 .net *"_s8", 0 0, C4<0>; 1 drivers
+v0x2757530_0 .net *"_s9", 28 0, L_0x27623f0; 1 drivers
+v0x27575d0_0 .net "carry", 0 0, L_0x2762160; 1 drivers
+v0x27576f0_0 .alias "exp", 7 0, v0x275ea80_0;
+v0x2757770_0 .alias "exp_out", 7 0, v0x275eb00_0;
+v0x2757650_0 .alias "mantis_A", 27 0, v0x275ec90_0;
+v0x2757880_0 .alias "mantis_B", 27 0, v0x275ee20_0;
+v0x27579a0_0 .alias "mantis_out", 27 0, v0x275ef30_0;
+v0x2757a20_0 .net "mantis_sum", 27 0, L_0x2762200; 1 drivers
+v0x2757900_0 .alias "sign", 0 0, v0x275f1c0_0;
+v0x2757b50_0 .alias "sign_A", 0 0, v0x275f240_0;
+v0x2757aa0_0 .alias "sign_B", 0 0, v0x275f350_0;
+L_0x2762160 .part L_0x2762c10, 28, 1;
+L_0x2762200 .part L_0x2762c10, 0, 28;
+L_0x2762300 .concat [ 28 1 0 0], L_0x2762020, C4<0>;
+L_0x27623f0 .concat [ 28 1 0 0], L_0x27620c0, C4<0>;
+L_0x2762550 .arith/sub 29, L_0x2762300, L_0x27623f0;
+L_0x2762760 .concat [ 28 1 0 0], L_0x2762020, C4<0>;
+L_0x27628d0 .concat [ 28 1 0 0], L_0x27620c0, C4<0>;
+L_0x2762a80 .arith/sum 29, L_0x2762760, L_0x27628d0;
+L_0x2762c10 .functor MUXZ 29, L_0x2762a80, L_0x2762550, L_0x27622a0, C4<>;
+L_0x2762fe0 .concat [ 1 7 0 0], L_0x2762160, C4<0000000>;
+S_0x2756400 .scope module, "__shifter" "shifter" 14 21, 12 1, S_0x2756310;
+ .timescale -9 -12;
+P_0x27564f8 .param/l "DIRECTION" 12 2, +C4<01>;
+P_0x2756520 .param/l "MODE" 12 3, +C4<0>;
+v0x27568a0_0 .alias "exp", 7 0, v0x275ea80_0;
+v0x2756920_0 .alias "exp_out", 7 0, v0x275eb00_0;
+v0x27569f0_0 .net "exp_target_or_diff", 7 0, L_0x2762fe0; 1 drivers
+v0x2756a90_0 .alias "mantis", 27 0, v0x2757a20_0;
+v0x2756b10_0 .alias "mantis_out", 27 0, v0x275ef30_0;
+v0x2756be0_0 .net "shift_number", 7 0, L_0x2762da0; 1 drivers
+L_0x2762e00 .arith/sum 8, v0x2759510_0, L_0x2762fe0;
+S_0x27566c0 .scope generate, "genblk2" "genblk2" 12 13, 12 13, S_0x2756400;
+ .timescale -9 -12;
+L_0x2762da0 .functor BUFZ 8, L_0x2762fe0, C4<00000000>, C4<00000000>, C4<00000000>;
+S_0x27567b0 .scope generate, "genblk3" "genblk3" 12 18, 12 18, S_0x27566c0;
+ .timescale -9 -12;
+S_0x27565d0 .scope generate, "genblk5" "genblk5" 12 22, 12 22, S_0x2756400;
+ .timescale -9 -12;
+L_0x2762ef0 .shift/l 28, L_0x2762200, L_0x2762da0;
+S_0x272eb40 .scope module, "__standardizer" "standardizer" 3 40, 15 1, S_0x273a1d0;
+ .timescale -9 -12;
+v0x2755ee0_0 .alias "exp_in", 7 0, v0x275eb00_0;
+v0x2755f80_0 .net "exp_norm", 7 0, v0x2755b10_0; 1 drivers
+v0x2756000_0 .alias "exp_out", 7 0, v0x275ea00_0;
+v0x27560d0_0 .alias "mantis_in", 27 0, v0x275ef30_0;
+v0x2756180_0 .net "mantis_norm", 27 0, v0x2755c30_0; 1 drivers
+v0x2756250_0 .alias "mantis_out", 22 0, v0x275eda0_0;
+S_0x2755620 .scope module, "__normalize" "normalize" 15 14, 16 1, S_0x272eb40;
+ .timescale -9 -12;
+v0x2755a50_0 .alias "exp_in", 7 0, v0x275eb00_0;
+v0x2755b10_0 .var "exp_out", 7 0;
+v0x2755b90_0 .alias "mantis_in", 27 0, v0x275ef30_0;
+v0x2755c30_0 .var "mantis_out", 27 0;
+v0x2755ce0 .array "parts", 0 6, 3 0;
+v0x2755e00_0 .var "shift", 5 0;
+v0x2755ce0_0 .array/port v0x2755ce0, 0;
+v0x2755ce0_1 .array/port v0x2755ce0, 1;
+v0x2755ce0_2 .array/port v0x2755ce0, 2;
+E_0x2755410/0 .event edge, v0x2755b90_0, v0x2755ce0_0, v0x2755ce0_1, v0x2755ce0_2;
+v0x2755ce0_3 .array/port v0x2755ce0, 3;
+v0x2755ce0_4 .array/port v0x2755ce0, 4;
+v0x2755ce0_5 .array/port v0x2755ce0, 5;
+v0x2755ce0_6 .array/port v0x2755ce0, 6;
+E_0x2755410/1 .event edge, v0x2755ce0_3, v0x2755ce0_4, v0x2755ce0_5, v0x2755ce0_6;
+E_0x2755410/2 .event edge, v0x2755e00_0, v0x2755a50_0;
+E_0x2755410 .event/or E_0x2755410/0, E_0x2755410/1, E_0x2755410/2;
+S_0x2755710 .scope function, "shift_mantis" "shift_mantis" 16 14, 16 14, S_0x2755620;
+ .timescale -9 -12;
+v0x2755800_0 .var "bits", 3 0;
+v0x2755880_0 .var "dev", 5 0;
+v0x2755900_0 .var "res", 5 0;
+v0x27559a0_0 .var "shift_mantis", 5 0;
+TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis ;
+    %load/v 8, v0x2755800_0, 4;
+    %mov 12, 2, 3;
+    %movi 15, 1, 1;
+    %cmp/x 8, 12, 4;
+    %jmp/1 T_0.0, 4;
+    %mov 16, 2, 2;
+    %movi 18, 1, 2;
+    %cmp/x 8, 16, 4;
+    %jmp/1 T_0.1, 4;
+    %mov 20, 2, 1;
+    %movi 21, 1, 3;
+    %cmp/x 8, 20, 4;
+    %jmp/1 T_0.2, 4;
+    %load/v 24, v0x2755880_0, 6;
+    %mov 30, 0, 26;
+    %addi 24, 3, 32;
+    %set/v v0x2755900_0, 24, 6;
+    %jmp T_0.4;
+T_0.0 ;
+    %load/v 8, v0x2755880_0, 6;
+    %set/v v0x2755900_0, 8, 6;
+    %jmp T_0.4;
+T_0.1 ;
+    %load/v 8, v0x2755880_0, 6;
+    %mov 14, 0, 26;
+    %addi 8, 1, 32;
+    %set/v v0x2755900_0, 8, 6;
+    %jmp T_0.4;
+T_0.2 ;
+    %load/v 8, v0x2755880_0, 6;
+    %mov 14, 0, 26;
+    %addi 8, 2, 32;
+    %set/v v0x2755900_0, 8, 6;
+    %jmp T_0.4;
+T_0.4 ;
+    %load/v 8, v0x2755900_0, 6;
+    %set/v v0x27559a0_0, 8, 6;
+    %end;
+S_0x272a3a0 .scope module, "__round" "round" 15 21, 17 1, S_0x272eb40;
+ .timescale -9 -12;
+v0x27548a0_0 .net *"_s1", 3 0, L_0x2763180; 1 drivers
+v0x2754960_0 .net *"_s12", 22 0, L_0x2763700; 1 drivers
+v0x2754a00_0 .net *"_s13", 23 0, L_0x2763830; 1 drivers
+v0x2754aa0_0 .net *"_s16", 0 0, C4<0>; 1 drivers
+v0x2754b20_0 .net *"_s18", 0 0, L_0x2763a00; 1 drivers
+v0x2754bc0_0 .net *"_s19", 23 0, L_0x2763aa0; 1 drivers
+v0x2754ca0_0 .net *"_s22", 22 0, C4<00000000000000000000000>; 1 drivers
+v0x2754d40_0 .net *"_s23", 23 0, L_0x2763c30; 1 drivers
+v0x2754e30_0 .net *"_s25", 6 0, C4<0000000>; 1 drivers
+v0x2754ed0_0 .net *"_s6", 22 0, L_0x2763580; 1 drivers
+v0x2754fd0_0 .net "carry", 0 0, L_0x27634e0; 1 drivers
+v0x2755070_0 .alias "exp", 7 0, v0x2755f80_0;
+v0x2755160_0 .alias "exp_out", 7 0, v0x275ea00_0;
+v0x2755210_0 .alias "mantis", 27 0, v0x2756180_0;
+v0x2755310_0 .alias "mantis_out", 22 0, v0x275eda0_0;
+v0x2755390_0 .net "mantis_shifted", 27 0, L_0x2763f00; 1 drivers
+v0x2755290_0 .net "mantis_tmp", 27 0, L_0x27633f0; 1 drivers
+v0x2755500_0 .net "r_bits", 0 0, L_0x2763220; 1 drivers
+L_0x2763180 .part v0x2755c30_0, 0, 4;
+L_0x2763220 .part L_0x2763180, 0, 1;
+L_0x27632c0 .part L_0x2763f00, 4, 23;
+L_0x27633f0 .part/pv L_0x2763580, 4, 23, 28;
+L_0x27634e0 .part L_0x2763c30, 23, 1;
+L_0x2763580 .part L_0x2763c30, 0, 23;
+L_0x2763700 .part v0x2755c30_0, 4, 23;
+L_0x2763830 .concat [ 23 1 0 0], L_0x2763700, C4<0>;
+L_0x2763a00 .part v0x2755c30_0, 3, 1;
+L_0x2763aa0 .concat [ 1 23 0 0], L_0x2763a00, C4<00000000000000000000000>;
+L_0x2763c30 .arith/sum 24, L_0x2763830, L_0x2763aa0;
+L_0x27640d0 .concat [ 1 7 0 0], L_0x27634e0, C4<0000000>;
+S_0x272bfa0 .scope module, "__shifter" "shifter" 17 16, 12 1, S_0x272a3a0;
+ .timescale -9 -12;
+P_0x272c2c8 .param/l "DIRECTION" 12 2, +C4<01>;
+P_0x272c2f0 .param/l "MODE" 12 3, +C4<0>;
+v0x2701900_0 .alias "exp", 7 0, v0x2755f80_0;
+v0x2754530_0 .alias "exp_out", 7 0, v0x275ea00_0;
+v0x27545d0_0 .net "exp_target_or_diff", 7 0, L_0x27640d0; 1 drivers
+v0x2754670_0 .alias "mantis", 27 0, v0x2755290_0;
+v0x2754720_0 .alias "mantis_out", 27 0, v0x2755390_0;
+v0x27547c0_0 .net "shift_number", 7 0, L_0x2763d70; 1 drivers
+L_0x2763dd0 .arith/sum 8, v0x2755b10_0, L_0x27640d0;
+S_0x272e780 .scope generate, "genblk2" "genblk2" 12 13, 12 13, S_0x272bfa0;
+ .timescale -9 -12;
+L_0x2763d70 .functor BUFZ 8, L_0x27640d0, C4<00000000>, C4<00000000>, C4<00000000>;
+S_0x272f1f0 .scope generate, "genblk3" "genblk3" 12 18, 12 18, S_0x272e780;
+ .timescale -9 -12;
+S_0x272d790 .scope generate, "genblk5" "genblk5" 12 22, 12 22, S_0x272bfa0;
+ .timescale -9 -12;
+L_0x2763f00 .shift/l 28, L_0x27633f0, L_0x2763d70;
+S_0x2738f90 .scope module, "shorten" "shorten" 18 1;
+ .timescale -9 -12;
+v0x275f890_0 .net "mantis", 27 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x275f910_0 .net "out", 22 0, L_0x27641c0; 1 drivers
+L_0x27641c0 .part C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzz>, 4, 23;
+S_0x2738300 .scope module, "sign_detect" "sign_detect" 19 1;
+ .timescale -9 -12;
+L_0x2763b90 .functor XOR 1, C4<z>, C4<z>, C4<0>, C4<0>;
+L_0x2764260 .functor XOR 1, C4<z>, C4<z>, C4<0>, C4<0>;
+L_0x27642c0 .functor AND 1, L_0x2763b90, L_0x2764260, C4<1>, C4<1>;
+v0x275f990_0 .net *"_s0", 0 0, L_0x2763b90; 1 drivers
+v0x275fa30_0 .net *"_s2", 0 0, L_0x2764260; 1 drivers
+v0x275fad0_0 .net *"_s4", 0 0, L_0x27642c0; 1 drivers
+v0x275fb70_0 .net "comp_code_exp", 0 0, C4<z>; 0 drivers
+v0x275fbf0_0 .net "comp_code_mantis", 0 0, C4<z>; 0 drivers
+v0x275fc90_0 .net "mantis_A", 27 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x275fd30_0 .net "mantis_B", 27 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x275fdd0_0 .net "sign", 0 0, L_0x27643c0; 1 drivers
+v0x275fe70_0 .net "sign_A", 0 0, C4<z>; 0 drivers
+v0x275ff10_0 .net "sign_B", 0 0, C4<z>; 0 drivers
+L_0x27643c0 .functor MUXZ 1, C4<z>, C4<z>, L_0x27642c0, C4<>;
+    .scope S_0x275cdd0;
+T_1 ;
+    %wait E_0x2758740;
+    %load/v 8, v0x275d1c0_0, 8;
+    %or/r 8, 8, 8;
+    %jmp/0xz  T_1.0, 8;
+    %load/v 8, v0x275d1c0_0, 8;
+    %and/r 8, 8, 8;
+    %jmp/0xz  T_1.2, 8;
+    %load/v 8, v0x275d2f0_0, 23;
+    %or/r 8, 8, 23;
+    %jmp/0xz  T_1.4, 8;
+    %movi 8, 4, 3;
+    %set/v v0x275d370_0, 8, 3;
+    %jmp T_1.5;
+T_1.4 ;
+    %movi 8, 1, 3;
+    %set/v v0x275d370_0, 8, 3;
+T_1.5 ;
+    %jmp T_1.3;
+T_1.2 ;
+    %movi 8, 3, 3;
+    %set/v v0x275d370_0, 8, 3;
+T_1.3 ;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/v 8, v0x275d2f0_0, 23;
+    %or/r 8, 8, 23;
+    %jmp/0xz  T_1.6, 8;
+    %movi 8, 2, 3;
+    %set/v v0x275d370_0, 8, 3;
+    %jmp T_1.7;
+T_1.6 ;
+    %set/v v0x275d370_0, 0, 3;
+T_1.7 ;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_0x275c7f0;
+T_2 ;
+    %wait E_0x2758690;
+    %load/v 8, v0x275cba0_0, 8;
+    %or/r 8, 8, 8;
+    %jmp/0xz  T_2.0, 8;
+    %load/v 8, v0x275cba0_0, 8;
+    %and/r 8, 8, 8;
+    %jmp/0xz  T_2.2, 8;
+    %load/v 8, v0x275ccd0_0, 23;
+    %or/r 8, 8, 23;
+    %jmp/0xz  T_2.4, 8;
+    %movi 8, 4, 3;
+    %set/v v0x275cd50_0, 8, 3;
+    %jmp T_2.5;
+T_2.4 ;
+    %movi 8, 1, 3;
+    %set/v v0x275cd50_0, 8, 3;
+T_2.5 ;
+    %jmp T_2.3;
+T_2.2 ;
+    %movi 8, 3, 3;
+    %set/v v0x275cd50_0, 8, 3;
+T_2.3 ;
+    %jmp T_2.1;
+T_2.0 ;
+    %load/v 8, v0x275ccd0_0, 23;
+    %or/r 8, 8, 23;
+    %jmp/0xz  T_2.6, 8;
+    %movi 8, 2, 3;
+    %set/v v0x275cd50_0, 8, 3;
+    %jmp T_2.7;
+T_2.6 ;
+    %set/v v0x275cd50_0, 0, 3;
+T_2.7 ;
+T_2.1 ;
+    %jmp T_2;
+    .thread T_2, $push;
+    .scope S_0x275bdf0;
+T_3 ;
+    %wait E_0x2755cb0;
+    %load/v 8, v0x275c6a0_0, 3;
+    %cmpi/u 8, 0, 3;
+    %mov 8, 4, 1;
+    %load/v 9, v0x275c770_0, 3;
+    %cmpi/u 9, 4, 3;
+    %or 8, 4, 1;
+    %jmp/0xz  T_3.0, 8;
+    %set/v v0x275c5d0_0, 1, 1;
+    %load/v 8, v0x275c2a0_0, 23;
+    %load/v 31, v0x275c150_0, 8;
+    %load/v 39, v0x275c500_0, 1;
+    %set/v v0x275c370_0, 8, 32;
+    %jmp T_3.1;
+T_3.0 ;
+    %load/v 8, v0x275c770_0, 3;
+    %cmpi/u 8, 0, 3;
+    %mov 8, 4, 1;
+    %load/v 9, v0x275c6a0_0, 3;
+    %cmpi/u 9, 4, 3;
+    %or 8, 4, 1;
+    %jmp/0xz  T_3.2, 8;
+    %set/v v0x275c5d0_0, 1, 1;
+    %load/v 8, v0x275c1d0_0, 23;
+    %load/v 31, v0x275c0d0_0, 8;
+    %load/v 39, v0x275c3f0_0, 1;
+    %set/v v0x275c370_0, 8, 32;
+    %jmp T_3.3;
+T_3.2 ;
+    %load/v 8, v0x275c6a0_0, 3;
+    %cmpi/u 8, 1, 3;
+    %jmp/0xz  T_3.4, 4;
+    %set/v v0x275c5d0_0, 1, 1;
+    %load/v 8, v0x275c770_0, 3;
+    %cmpi/u 8, 3, 3;
+    %mov 8, 4, 1;
+    %load/v 9, v0x275c770_0, 3;
+    %cmpi/u 9, 2, 3;
+    %or 8, 4, 1;
+    %jmp/0xz  T_3.6, 8;
+    %load/v 8, v0x275c1d0_0, 23;
+    %load/v 31, v0x275c0d0_0, 8;
+    %load/v 39, v0x275c3f0_0, 1;
+    %set/v v0x275c370_0, 8, 32;
+    %jmp T_3.7;
+T_3.6 ;
+    %load/v 8, v0x275c770_0, 3;
+    %cmpi/u 8, 1, 3;
+    %jmp/0xz  T_3.8, 4;
+    %load/v 8, v0x275c3f0_0, 1;
+    %load/v 9, v0x275c500_0, 1;
+    %cmp/u 8, 9, 1;
+    %jmp/0xz  T_3.10, 4;
+    %load/v 8, v0x275c2a0_0, 23;
+    %load/v 31, v0x275c150_0, 8;
+    %load/v 39, v0x275c500_0, 1;
+    %set/v v0x275c370_0, 8, 32;
+    %jmp T_3.11;
+T_3.10 ;
+    %movi 8, 4286578689, 32;
+    %set/v v0x275c370_0, 8, 32;
+T_3.11 ;
+T_3.8 ;
+T_3.7 ;
+    %jmp T_3.5;
+T_3.4 ;
+    %load/v 8, v0x275c770_0, 3;
+    %cmpi/u 8, 1, 3;
+    %jmp/0xz  T_3.12, 4;
+    %set/v v0x275c5d0_0, 1, 1;
+    %load/v 8, v0x275c2a0_0, 23;
+    %load/v 31, v0x275c150_0, 8;
+    %load/v 39, v0x275c500_0, 1;
+    %set/v v0x275c370_0, 8, 32;
+    %jmp T_3.13;
+T_3.12 ;
+    %set/v v0x275c5d0_0, 0, 1;
+    %set/v v0x275c370_0, 0, 32;
+T_3.13 ;
+T_3.5 ;
+T_3.3 ;
+T_3.1 ;
+    %jmp T_3;
+    .thread T_3, $push;
+    .scope S_0x2759200;
+T_4 ;
+    %wait E_0x27546f0;
+    %load/v 8, v0x2759310_0, 1;
+    %jmp/0xz  T_4.0, 8;
+    %load/v 8, v0x2759730_0, 28;
+    %set/v v0x27598d0_0, 8, 28;
+    %load/v 8, v0x2759670_0, 28;
+    %set/v v0x27597b0_0, 8, 28;
+    %load/v 8, v0x2759470_0, 8;
+    %set/v v0x27595c0_0, 8, 8;
+    %load/v 8, v0x27593d0_0, 8;
+    %set/v v0x2759510_0, 8, 8;
+    %jmp T_4.1;
+T_4.0 ;
+    %load/v 8, v0x2759670_0, 28;
+    %set/v v0x27598d0_0, 8, 28;
+    %load/v 8, v0x2759730_0, 28;
+    %set/v v0x27597b0_0, 8, 28;
+    %load/v 8, v0x27593d0_0, 8;
+    %set/v v0x27595c0_0, 8, 8;
+    %load/v 8, v0x2759470_0, 8;
+    %set/v v0x2759510_0, 8, 8;
+T_4.1 ;
+    %jmp T_4;
+    .thread T_4, $push;
+    .scope S_0x2755620;
+T_5 ;
+    %wait E_0x2755410;
+    %load/v 8, v0x2755b90_0, 28;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 0, 0;
+   %set/av v0x2755ce0, 8, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 1, 0;
+   %set/av v0x2755ce0, 12, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 2, 0;
+   %set/av v0x2755ce0, 16, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 3, 0;
+   %set/av v0x2755ce0, 20, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 4, 0;
+   %set/av v0x2755ce0, 24, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 5, 0;
+   %set/av v0x2755ce0, 28, 4;
+   %ix/load 1, 0, 0;
+   %ix/load 3, 6, 0;
+   %set/av v0x2755ce0, 32, 4;
+    %ix/load 3, 6, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.0, 8;
+    %ix/load 3, 6, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %set/v v0x2755880_0, 0, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.1;
+T_5.0 ;
+    %ix/load 3, 5, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.2, 8;
+    %ix/load 3, 5, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 4, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.3;
+T_5.2 ;
+    %ix/load 3, 4, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.4, 8;
+    %ix/load 3, 4, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 8, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.5;
+T_5.4 ;
+    %ix/load 3, 3, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.6, 8;
+    %ix/load 3, 3, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 12, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.7;
+T_5.6 ;
+    %ix/load 3, 2, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.8, 8;
+    %ix/load 3, 2, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 16, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.9;
+T_5.8 ;
+    %ix/load 3, 1, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.10, 8;
+    %ix/load 3, 1, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 20, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.11;
+T_5.10 ;
+    %ix/load 3, 0, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %or/r 8, 8, 4;
+    %jmp/0xz  T_5.12, 8;
+    %ix/load 3, 0, 0;
+    %mov 4, 0, 1;
+    %load/av 8, v0x2755ce0, 4;
+    %set/v v0x2755800_0, 8, 4;
+    %movi 8, 24, 6;
+    %set/v v0x2755880_0, 8, 6;
+    %fork TD_fpa_tb.__fpa.__standardizer.__normalize.shift_mantis, S_0x2755710;
+    %join;
+    %load/v  8, v0x27559a0_0, 6;
+    %set/v v0x2755e00_0, 8, 6;
+    %jmp T_5.13;
+T_5.12 ;
+    %set/v v0x2755e00_0, 0, 6;
+T_5.13 ;
+T_5.11 ;
+T_5.9 ;
+T_5.7 ;
+T_5.5 ;
+T_5.3 ;
+T_5.1 ;
+    %load/v 8, v0x2755b90_0, 28;
+    %load/v 36, v0x2755e00_0, 6;
+    %ix/get 0, 36, 6;
+    %shiftl/i0  8, 28;
+    %set/v v0x2755c30_0, 8, 28;
+    %load/v 8, v0x2755a50_0, 8;
+    %load/v 16, v0x2755e00_0, 6;
+    %mov 22, 0, 2;
+    %sub 8, 16, 8;
+    %set/v v0x2755b10_0, 8, 8;
+    %jmp T_5;
+    .thread T_5, $push;
+    .scope S_0x27329f0;
+T_6 ;
+    %movi 8, 10000, 15;
+T_6.0 %cmp/s 0, 8, 15;
+    %jmp/0xz T_6.1, 5;
+    %add 8, 1, 15;
+    %vpi_func 2 20 "$random", 23, 32;
+    %set/v v0x275f710_0, 23, 32;
+    %vpi_func 2 21 "$random", 23, 32;
+    %set/v v0x275f790_0, 23, 32;
+    %delay 5000, 0;
+    %vpi_call 2 27 "$display", "number_A = %b", v0x275f710_0;
+    %vpi_call 2 28 "$display", "number_B = %b", v0x275f790_0;
+    %load/v 23, v0x275f690_0, 23;
+    %load/v 46, v0x275f610_0, 8;
+    %load/v 54, v0x275f810_0, 1;
+    %vpi_call 2 29 "$display", "out_test = %b", T<23,32,u>;
+    %vpi_call 2 39 "$write", "\012 ******************************* \012";
+    %delay 5000, 0;
+    %jmp T_6.0;
+T_6.1 ;
+    %vpi_call 2 43 "$finish";
+    %end;
+    .thread T_6;
+# The file index is used to find the file name in the following table.
+:file_names 20;
+    "N/A";
+    "<interactive>";
+    "fpa_tb.v";
+    "fpa.v";
+    "preadder/preadder.v";
+    "preadder/div_number/div_number.v";
+    "preadder/type_detect/type_detect.v";
+    "preadder/special_cases/special_cases.v";
+    "preadder/init_number/init_number.v";
+    "preadder/init_number/extender/extender.v";
+    "preadder/init_number/comparator/comparator.v";
+    "preadder/init_number/shift_selector/shift_selector.v";
+    "preadder/init_number/shifter/shifter.v";
+    "preadder/init_number/swap/swap.v";
+    "adder/adder.v";
+    "standardizer/standardizer.v";
+    "standardizer/normalize/normalize.v";
+    "standardizer/round/round.v";
+    "standardizer/shorten/shorten.v";
+    "preadder/init_number/sign_detect/sign_detect.v";

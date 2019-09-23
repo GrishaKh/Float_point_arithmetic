@@ -11,7 +11,7 @@ wire r_bits = mantis[3:0];
 wire [27:0] mantis_shifted;
 
 assign mantis_out = mantis_shifted[26:4];
-assign {carry, mantis_tmp} = mantis + mantis[3];
+assign {carry, mantis_tmp[26:4]} = mantis[26:4] + mantis[3];
 
 shifter #(.DIRECTION(1)) __shifter (
     .exp (exp),
