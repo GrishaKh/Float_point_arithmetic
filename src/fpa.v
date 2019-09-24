@@ -11,6 +11,8 @@ wire [27:0] mantis_great, mantis_small, mantis_tmp;
 wire [22:0] mantis_out;
 wire special_case;
 wire [31:0] special_result;
+wire loss_preadder, loss_adder;
+wire operator;
 
 assign {sign, exp, mantis} = special_case ? special_result : {sign_out, exp_out, mantis_out};
 
@@ -23,7 +25,8 @@ preadder __preadder (
     .mantis_great (mantis_great),
     .mantis_small (mantis_small),
     .special_case (special_case),
-    .special_result (special_result)
+    .special_result (special_result),
+    .loss (loss_preadder)
 );
 
 adder __adder (
@@ -34,14 +37,19 @@ adder __adder (
     .mantis_A (mantis_great),
     .mantis_B (mantis_small),
     .exp_out (exp_tmp),
-    .mantis_out (mantis_tmp)
+    .mantis_out (mantis_tmp),
+    .loss (loss_adder),
+    .operator(operator)
 );
 
 standardizer __standardizer (
     .exp_in (exp_tmp),
     .mantis_in (mantis_tmp),
+    .sign_in (sign_out),
+    .operator_in (operator),
     .exp_out (exp_out),
-    .mantis_out (mantis_out)
+    .mantis_out (mantis_out),
+    .loss (loss_preadder | loss_adder)
 );
 
 endmodule

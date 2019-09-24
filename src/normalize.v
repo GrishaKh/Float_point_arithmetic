@@ -39,7 +39,13 @@ always @(*) begin
     else if (|parts[0]) shift = shift_mantis(parts[0], 6'd24);
     else                shift = 0                            ;
 
-    mantis_out = (mantis_in << shift);
-    exp_out = (exp_in - shift);
+    if (exp_in >= shift) begin
+        mantis_out = (mantis_in << shift);
+        exp_out = (exp_in - shift);
+    end
+    else begin
+        mantis_out = (mantis_in << exp_in);
+        exp_out = 8'h00;
+    end
 end
 endmodule

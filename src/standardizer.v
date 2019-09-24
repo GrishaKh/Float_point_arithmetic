@@ -1,11 +1,14 @@
 module standardizer (
-    exp_in, mantis_in,
-    operator,
+    sign_in, exp_in, mantis_in,
+    operator_in, loss,
     exp_out, mantis_out
 );
 
+input sign_in;
 input [7:0] exp_in;
 input [27:0] mantis_in;
+input loss;
+input operator_in;
 output [7:0] exp_out;
 output [22:0] mantis_out;
 
@@ -22,8 +25,11 @@ normalize __normalize (
 round __round (
     .exp (exp_norm),
     .mantis (mantis_norm),
+    .sign (sign_in),
+    .operator (operator_in),
     .exp_out (exp_out),
-    .mantis_out (mantis_out)
+    .mantis_out (mantis_out),
+    .loss (loss)
 );
 
 endmodule // standardizer

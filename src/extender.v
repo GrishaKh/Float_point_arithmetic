@@ -8,6 +8,6 @@ parameter [2:0] NORMAL = 3'b011;
 
 assign mantis_out = type_number == NORMAL ? 
                     {1'b1, mantis, 4'b0000}: 
-                    {1'b0, mantis, 4'b0000};
+                    {mantis, 5'b0000};
 
 endmodule
