@@ -11,7 +11,8 @@ wire [27:0] mantis_great, mantis_small, mantis_tmp;
 wire [22:0] mantis_out;
 wire special_case;
 wire [31:0] special_result;
-wire loss_preadder, loss_adder;
+wire [1:0] loss_preadder;
+wire loss_adder;
 wire operator;
 
 assign {sign, exp, mantis} = special_case ? special_result : {sign_out, exp_out, mantis_out};
@@ -49,7 +50,7 @@ standardizer __standardizer (
     .operator_in (operator),
     .exp_out (exp_out),
     .mantis_out (mantis_out),
-    .loss (loss_preadder | loss_adder)
+    .loss ({loss_preadder[1] | loss_adder, loss_preadder[0]})
 );
 
 endmodule

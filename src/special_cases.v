@@ -21,7 +21,12 @@ output reg [31:0] result;
 output reg special_case;
 
 always @(*) begin
-    if (type_A == ZERO || type_B == NAN) begin
+    if (type_A == NAN && type_B == NAN) begin
+        special_case = 1'b1;
+        result = (mantis_A[21:0] >= mantis_B[21:0]) ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}:
+					{sign_B, exp_B, 1'b1, mantis_B[21:0]};
+    end
+    else if (type_A == ZERO || type_B == NAN) begin
         special_case = 1'b1;
         result = {sign_B, exp_B, mantis_B};
     end

@@ -7,7 +7,7 @@ module standardizer (
 input sign_in;
 input [7:0] exp_in;
 input [27:0] mantis_in;
-input loss;
+input [1:0] loss;
 input operator_in;
 output [7:0] exp_out;
 output [22:0] mantis_out;

@@ -10,7 +10,8 @@ output sign_of_great, sign_of_small;
 output [7:0] exp;
 output [27:0] mantis_great, mantis_small;
 output [31:0] special_result;
-output special_case, loss;
+output special_case;
+output [1:0] loss;
 
 wire sign_A, sign_B;
 wire [7:0] exp_A, exp_B;
