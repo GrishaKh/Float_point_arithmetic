@@ -1,9 +1,7 @@
-module fpa (number_A, number_B, sign, exp, mantis);
+module fpa (number_A, number_B, number_out);
 
 input [31:0] number_A, number_B;
-output sign;
-output [7:0] exp;
-output [22:0] mantis;
+output [31:0] number_out;
 
 wire sign_of_great, sign_of_small, sign_out;
 wire [7:0] exp_preadder, exp_tmp, exp_out;
@@ -15,7 +13,7 @@ wire [1:0] loss_preadder;
 wire loss_adder;
 wire operator;
 
-assign {sign, exp, mantis} = special_case ? special_result : {sign_out, exp_out, mantis_out};
+assign number_out = special_case ? special_result : {sign_out, exp_out, mantis_out};
 
 preadder __preadder (
     .number_A (number_A),

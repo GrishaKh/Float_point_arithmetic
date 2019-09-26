@@ -9,14 +9,15 @@ output [27:0] mantis_out;
 output loss;
 //output overflow;
 
-tri0 overflow;
 wire [7:0] shift_number;
 wire [55:0] tmp;
+tri0 overflow;
 
 generate
     if (MODE) begin
         assign exp_out = exp_target_or_diff;
         assign shift_number = exp_target_or_diff - exp;
+	    assign overflow = 1'b0;
     end
     else begin
         if (DIRECTION) assign {overflow, exp_out} = exp + exp_target_or_diff;
