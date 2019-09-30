@@ -2,84 +2,96 @@
 
 module fpa_tb;
 
-reg clk;
-reg [31:0] number_A, number_B;
-reg sign_in[1:0];
-reg [7:0] exp_in[1:0];
-reg [22:0] mantis_in[1:0];
+reg clk, status;
+reg [61:0] counter;
+wire [31:0] number_out [3:0];
 
-wire [31:0] number_out;
+initial clk = 1;
+initial status = 0;
+initial counter = 62'b0;
 
-top __top (
+function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
+    if ($shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)) != num_check)
+    begin
+        $display ("Fail");
+        $display ("number_A = %b, %d", num_A, $bitstoshortreal(num_A));
+        $display ("number_B = %b, %d", num_B, $bitstoshortreal(num_B));
+        $display ("out_test = %b, %d", num_check, $bitstoshortreal(num_check));
+        $display ("out_real = %b", $shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)));
+        $write ("\n ******************************* \n");
+        status = 1'b1;
+        $stop;
+    end
+endfunction
+
+top inst_00 (
     .clk (clk),
-    .number_A (number_A),
-    .number_B (number_B),
-    .number_out (number_out)
+    .number_A ({1'b0, counter[30:0]}),
+    .number_B ({1'b0, counter[61:31]}),
+    .number_out (number_out[0])
+);
+
+top inst_01 (
+    .clk (clk),
+    .number_A ({1'b0, counter[30:0]}),
+    .number_B ({1'b1, counter[61:31]}),
+    .number_out (number_out[1])
+);
+
+top inst_11 (
+    .clk (clk),
+    .number_A ({1'b1, counter[30:0]}),
+    .number_B ({1'b1, counter[61:31]}),
+    .number_out (number_out[2])
+);
+
+top inst_10 (
+    .clk (clk),
+    .number_A ({1'b1, counter[30:0]}),
+    .number_B ({1'b0, counter[61:31]}),
+    .number_out (number_out[3])
 );
 
 always #2 clk = ~clk;
 
-always begin
-    /*for (sign_in[0] = 0; sign_in[0] < 1; sign_in[0] = sign_in[0] + 1)
-    for (exp_in[0] = 0; exp_in[0] < 254; exp_in[0] = exp_in[0] + 1)
-    for (mantis_in[0] = 0; mantis_in[0] < 8388607; mantis_in[0] = mantis_in[0] + 1)
-    for (sign_in[1] = 0; sign_in[1] < 1; sign_in[0] = sign_in[1] + 1)
-    for (exp_in[1] = 0; exp_in[1] < 254; exp_in[1] = exp_in[1] + 1)
-    for (mantis_in[1] = 0; mantis_in[1] < 8388607; mantis_in[1] = mantis_in[1] + 1) begin
-	number_A = {sign_in[0], exp_in[0], mantis_in[0]};
-        number_B = {sign_in[1], exp_in[1], mantis_in[1]};
-	#2;
-        $display ("number_A = \t%b", number_A);
-       	$display ("number_B = \t%b", number_B);
-        $display ("out_test = \t%b", {sign, exp, mantis});
-        $display ("out_expexted = \t%b", $shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)));
-	if ($shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)) == {sign, exp, mantis})
-        begin
-            $display ("Pass");
-	end else begin
-  	    $display ("Fail");
-	    $stop;
-        end
+initial begin
+    forever begin
+        @(posedge clk);
 
-        $write ("\n ******************************* \n");
-        #1;
-    end*/
-    //repeat (100000) begin
-    sign_in[0] = $urandom;
-	sign_in[1] = $urandom;
-	exp_in[0] = $urandom;
-    exp_in[1] = $urandom;
-	mantis_in[0] = $urandom;
-	mantis_in[1] = $urandom;
+        #0.2 check_equiv ({1'b0, counter[30:0]}, {1'b0, counter[61:31]}, number_out[0]);
+        #0.2 check_equiv ({1'b0, counter[30:0]}, {1'b1, counter[61:31]}, number_out[1]);
+        #0.2 check_equiv ({1'b1, counter[30:0]}, {1'b1, counter[61:31]}, number_out[2]);
+        #0.2 check_equiv ({1'b1, counter[30:0]}, {1'b0, counter[61:31]}, number_out[3]);
 
-    number_A = {sign_in[0], exp_in[0], mantis_in[0]};
-    number_B = {sign_in[1], exp_in[1], mantis_in[1]};
-    @(posedge clk);
-
-    $display ("number_A = %b, %d", number_A, $bitstoshortreal(number_A));
-    $display ("number_B = %b, %d", number_B, $bitstoshortreal(number_B));
-    $display ("out_test = %b", {sign, exp, mantis});
-    $display ("out_real = %b", $shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)));
-	$display ("mantis[4] = %b", __fpa.__standardizer.__round.mantis[4]);
-	$display ("diff = %d", __fpa.__preadder.__init_number.__shifter.shift_number);
-    $display ("bits = %b", __fpa.__standardizer.__round.r_bits); 
- 
-    if ($shortrealtobits($bitstoshortreal(number_A) + $bitstoshortreal(number_B)) == number_out)
-    begin
-        //$display ("Pass");
-        //continue;
-    end else begin
-        $display ("Fail");
-	    $stop;
-	    //continue;
+        counter = counter + 1;
+        @(posedge clk);
     end
+end
 
-	$display ("Pass");
-    //$write ("\n ******************************* \n");
-    #1;
-    //end
+initial begin
+    wait (counter[20]);
+    $display ("counter[20] == 1");
+    wait (counter[21]);
+    $display ("counter[21] == 1");
+    wait (counter[22]);
+    $display ("counter[22] == 1");
+    wait (counter[23]);
+    $display ("counter[23] == 1");
+    wait (counter[25]);
+    $display ("counter[25] == 1");
+    wait (counter[28]);
+    $display ("counter[28] == 1");
+    wait (counter[29]);
+    $display ("counter[29] == 1");
+    wait (counter[30]);
+    $display ("counter[30] == 1");
+    wait (counter[31]);
+    $display ("counter[31] == 1");
+    wait (&counter);
+    if (status) $display ("Test Fail...");
+    else        $display ("Test Pass!");
 
-    //$finish;
+    $finish;
 end
 
 endmodule

@@ -24,15 +24,21 @@ always @(*) begin
     if (type_A == NAN && type_B == NAN) begin
         special_case = 1'b1;
         result = (mantis_A[21:0] >= mantis_B[21:0]) ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}:
-					{sign_B, exp_B, 1'b1, mantis_B[21:0]};
+				    		      {sign_B, exp_B, 1'b1, mantis_B[21:0]};
+    end
+    else if (type_A == ZERO && type_B == ZERO) begin
+        special_case = 1'b1;
+        result = {sign_A&sign_B, 31'h0};
     end
     else if (type_A == ZERO || type_B == NAN) begin
         special_case = 1'b1;
-        result = {sign_B, exp_B, mantis_B};
+        result = type_B == NAN ? {sign_B, exp_B, 1'b1, mantis_B[21:0]}:
+				 {sign_B, exp_B, mantis_B};
     end
     else if (type_B == ZERO || type_A == NAN) begin
         special_case = 1'b1;
-        result = {sign_A, exp_A, mantis_A};
+        result = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}: 
+				 {sign_A, exp_A, mantis_A};
     end
     else if (type_A == INF) begin
         special_case = 1'b1;
