@@ -24,31 +24,38 @@ function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
     end
 endfunction
 
-top inst_00 (
+top zero (
     .clk (clk),
-    .number_A ({1'b0, counter[30:0]}),
-    .number_B ({1'b0, counter[61:31]}),
+    .number_A (),
+    .number_B (),
     .number_out (number_out[0])
 );
 
-top inst_01 (
+top inf (
     .clk (clk),
-    .number_A ({1'b0, counter[30:0]}),
-    .number_B ({1'b1, counter[61:31]}),
+    .number_A (),
+    .number_B (),
     .number_out (number_out[1])
 );
 
-top inst_11 (
+top nan (
     .clk (clk),
-    .number_A ({1'b1, counter[30:0]}),
-    .number_B ({1'b1, counter[61:31]}),
+    .number_A (),
+    .number_B (),
     .number_out (number_out[2])
 );
 
-top inst_10 (
+top sub (
     .clk (clk),
-    .number_A ({1'b1, counter[30:0]}),
-    .number_B ({1'b0, counter[61:31]}),
+    .number_A (),
+    .number_B (),
+    .number_out ()
+);
+
+top norm (
+    .clk (clk),
+    .number_A (),
+    .number_B (),
     .number_out (number_out[3])
 );
 
