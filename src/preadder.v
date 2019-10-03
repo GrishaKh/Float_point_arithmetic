@@ -16,6 +16,7 @@ output [1:0] loss;
 wire sign_A, sign_B;
 wire [7:0] exp_A, exp_B;
 wire [22:0] mantis_A, mantis_B;
+wire [27:0] mantis_ext_A, mantis_ext_B;
 
 wire [2:0] type_A, type_B;
 
@@ -49,6 +50,18 @@ type_detect __type_B
     .mantis(mantis_B)
 );
 
+extender __extender_A (
+    .mantis (mantis_A),
+    .type_number (type_A),
+    .mantis_out (mantis_ext_A)
+);
+
+extender __extender_B (
+    .mantis (mantis_B),
+    .type_number (type_B),
+    .mantis_out (mantis_ext_B)
+);
+
 special_cases __special_cases
 (
     .sign_A(sign_A),
@@ -69,10 +82,8 @@ init_number __init_number
     .sign_B (sign_B),
     .exp_A (exp_A),
     .exp_B (exp_B),
-    .mantis_A (mantis_A),
-    .mantis_B (mantis_B),
-    .type_A (type_A),
-    .type_B (type_B),
+    .mantis_A (mantis_ext_A),
+    .mantis_B (mantis_ext_B),
     .sign_of_great (sign_of_great),
     .sign_of_small (sign_of_small),
     .exp (exp),
