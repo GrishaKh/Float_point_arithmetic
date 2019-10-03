@@ -3,7 +3,8 @@
 module fpa_tb;
 
 reg clk;
-reg [1:0] status [4:0];
+reg [4:0] status_end;
+reg status;
 reg [31:0]  number_A_0,
             number_B_0,
             number_A_1,
@@ -18,19 +19,18 @@ reg [31:0]  number_A_0,
 wire [31:0] number_out [4:0];
 
 initial clk = 1;
-initial for (int i = 0; i < 5; i++) status [0][i] = 2'b0;
-initial for (int i = 0; i < 5; i++) status [1][i] = 2'b0;
+initial for (int i = 0; i < 5; i++) status_end [i] = 1'b0;
 
 function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
     if ($shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)) != num_check)
     begin
         $display ("Fail");
-        $display ("number_A = %b, %d", num_A, $bitstoshortreal(num_A));
-        $display ("number_B = %b, %d", num_B, $bitstoshortreal(num_B));
-        $display ("out_test = %b, %d", num_check, $bitstoshortreal(num_check));
+        $display ("number_A = %b, %f", num_A, $bitstoshortreal(num_A));
+        $display ("number_B = %b, %f", num_B, $bitstoshortreal(num_B));
+        $display ("out_test = %b, %f", num_check, $bitstoshortreal(num_check));
         $display ("out_real = %b", $shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)));
         $write ("\n ******************************* \n");
-        status[0] = 1'b1;
+        status = 1'b1;
         $stop;
     end
         //$display ("number_A = %b, %d", num_A, $bitstoshortreal(num_A));
@@ -126,13 +126,65 @@ initial begin : init_zero
     end
 
 
-    status[1] = 1;
+    status_end[0] = 1;
+end
+
+initial begin : init_inf
+    reg sign [1:0];
+    reg [7:0] exp [1:0];
+    reg [22:0] mantis [1:0];
+    
+    automatic int diff = 1;
+
+    sign [1:0] = {1'b0, 1'b0};
+    exp [1:0] = {8'b0, 8'hFF};
+    mantis [1:0] = {0, 0};
+
+    assign number_A_0 = {sign[0], exp[0], mantis[0]};
+    assign number_B_0 = {sign[1], exp[1], mantis[1]};
+
+    repeat (100) begin
+    @(posedge clk);
+    repeat (10000) begin
+        @(posedge clk);
+        #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
+        mantis[1] += diff;
+        sign[1] = ~sign[1];
+        diff++;
+        @(posedge clk);
+    end
+
+    exp[1] += 10;
+    mantis[1] = 0;
+    end
+    
+    mantis[1] = 0;
+    exp [1:0] = {8'hFF, 8'b0};
+    diff = 0;
+
+    repeat (100) begin
+    @(posedge clk);
+    repeat (10000) begin
+        @(posedge clk);
+        #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
+        mantis[0] += diff;
+        sign[0] = ~sign[0];
+        diff++;
+        @(posedge clk);
+    end
+
+    exp[0] += 10;
+    mantis[0] = 0;
+    end
+
+
+    status_end[1] = 1;
 end
 
 initial begin
-    wait (status[1]);
-    if (status [0]) $display ("Test Fail...");
-    else            $display ("Test Pass!");
+    wait (status_end[0] & status_end[1]);
+    if (status) $display ("Test Fail...");
+    else        $display ("Test Pass!");
 
     $finish;
 end
