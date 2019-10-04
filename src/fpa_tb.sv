@@ -82,8 +82,6 @@ initial begin : init_zero
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
     
-    automatic int diff = 1;
-
     sign [1:0] = {0, 0};
     exp [1:0] = {0, 0};
     mantis [1:0] = {0, 0};
@@ -96,35 +94,32 @@ initial begin : init_zero
     repeat (10000) begin
         @(posedge clk);
         #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
-        mantis[1] += diff;
-        sign[1] = ~sign[1];
-        diff++;
+        mantis[1] = $urandom;
+        sign[0] = $urandom;
+        sign[1] = $urandom;
         @(posedge clk);
     end
 
-    exp[1] += 10;
+    exp[1] = $urandom;
     mantis[1] = 0;
     end
+
+    $display ("End ZERO <-> ZERO, ZERO <-> SUB, ZERO <-> NORM");
     
     mantis[1] = 0;
-    exp[1] = 0;
-    diff = 0;
+    exp[1] = 8'hFF;
 
-    repeat (100) begin
     @(posedge clk);
     repeat (10000) begin
         @(posedge clk);
         #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
-        mantis[0] += diff;
-        sign[0] = ~sign[0];
-        diff++;
+        mantis[1] = $urandom;
+        sign[0] = $urandom;
+        sign[1] = $urandom;
         @(posedge clk);
     end
 
-    exp[0] += 10;
-    mantis[0] = 0;
-    end
-
+    $display ("End ZERO <-> INF, ZERO <-> NAN");
 
     status_end[0] = 1;
 end
@@ -134,11 +129,11 @@ initial begin : init_inf
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
     
-    automatic int diff = 1;
-
     sign [1:0] = {1'b0, 1'b0};
-    exp [1:0] = {8'b0, 8'hFF};
-    mantis [1:0] = {0, 0};
+    exp[0] = 8'hFF;
+    exp[1] = 0;
+    mantis[0] = 0;
+    mantis[1] = 0;
 
     assign number_A_0 = {sign[0], exp[0], mantis[0]};
     assign number_B_0 = {sign[1], exp[1], mantis[1]};
@@ -147,36 +142,33 @@ initial begin : init_inf
     @(posedge clk);
     repeat (10000) begin
         @(posedge clk);
-        #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
-        mantis[1] += diff;
-        sign[1] = ~sign[1];
-        diff++;
+        #0.5 check_equiv (number_A_0, number_B_0, number_out[1]);
+        mantis[1] = $urandom;
+        sign[0] = $urandom;
+        sign[1] = $urandom;
         @(posedge clk);
     end
 
-    exp[1] += 10;
+    exp[1] = $urandom;
     mantis[1] = 0;
     end
+
+    $display ("End INF <-> ZERO, INF <-> SUB, INF <-> NORM");
     
     mantis[1] = 0;
-    exp [1:0] = {8'hFF, 8'b0};
-    diff = 0;
+    exp[1] = 8'hFF;
 
-    repeat (100) begin
     @(posedge clk);
     repeat (10000) begin
         @(posedge clk);
         #0.5 check_equiv (number_A_0, number_B_0, number_out[0]);
-        mantis[0] += diff;
-        sign[0] = ~sign[0];
-        diff++;
+        mantis[1] = $urandom;
+        sign[0] = $urandom;
+        sign[1] = $urandom;
         @(posedge clk);
     end
 
-    exp[0] += 10;
-    mantis[0] = 0;
-    end
-
+    $display ("End INF <-> INF, INF <-> NAN");
 
     status_end[1] = 1;
 end
