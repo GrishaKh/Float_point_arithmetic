@@ -39,7 +39,7 @@ wire [27:0] mantis_shifted;
 wire [7:0] exp_shift;
 wire [1:0] code_exp, code_mantis;
 wire mantis_swap_code;
-wire shift_select_code = ~code_exp[1]&code_exp[0];
+wire shift_select_code = code_exp[1]&(~code_exp[0]);
 
 assign loss[0] = code_mantis[1];
 

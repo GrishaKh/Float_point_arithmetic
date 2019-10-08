@@ -38,12 +38,16 @@ always @(*) begin
     else if (type_B == ZERO || type_A == NAN) begin
         special_case = 1'b1;
         result = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}: 
-				 {sign_A, exp_A, mantis_A};
+		                         {sign_A, exp_A, mantis_A};
     end
     else if (type_A == INF) begin
         special_case = 1'b1;
         if (type_B == NORMAL || type_B == SUBNORMAL) begin
             result = {sign_A, exp_A, mantis_A};
+        end
+        else if (type_B == INF) begin
+            if (sign_A == sign_B) result = {sign_A, 8'hFF, 23'h0};
+            else                  result = {sign_A, 8'hFF, 1'b1, 22'h0};
         end
         else begin
             if (sign_A == sign_B) result = {sign_B, exp_B, mantis_B};
