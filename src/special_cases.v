@@ -23,8 +23,10 @@ output reg special_case;
 always @(*) begin
     if (type_A == NAN && type_B == NAN) begin
         special_case = 1'b1;
-        result = (mantis_A[21:0] >= mantis_B[21:0]) ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}:
-				    		      {sign_B, exp_B, 1'b1, mantis_B[21:0]};
+        result = (mantis_A[21:0] >= mantis_B[21:0]) ? 
+                 (mantis_A[21:0] == mantis_B[21:0]) ? {sign_A&sign_B, exp_A, 1'b1, mantis_A[21:0]} :
+                                                      {sign_A, exp_A, 1'b1, mantis_A[21:0]}:
+				    		                          {sign_B, exp_B, 1'b1, mantis_B[21:0]};
     end
     else if (type_A == ZERO && type_B == ZERO) begin
         special_case = 1'b1;
@@ -47,7 +49,7 @@ always @(*) begin
         end
         else if (type_B == INF) begin
             if (sign_A == sign_B) result = {sign_A, 8'hFF, 23'h0};
-            else                  result = {sign_A, 8'hFF, 1'b1, 22'h0};
+            else                  result = {1'b1, 8'hFF, 1'b1, 22'h0};
         end
         else begin
             if (sign_A == sign_B) result = {sign_B, exp_B, mantis_B};
