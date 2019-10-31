@@ -77,7 +77,7 @@ top norm (
 
 always #2 clk = ~clk;
 
-initial begin : init_zero
+/* initial begin : init_zero
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -127,7 +127,7 @@ initial begin : init_zero
     $display ("End ZERO <-> INF, ZERO <-> NAN");
 
     status_end[0] = 1;
-end
+end */
 
 /*initial begin : init_inf
     reg sign [1:0];
@@ -298,7 +298,7 @@ end*/
     status_end[3] = 1;
 end */
 
-/*initial begin : init_norm
+initial begin : init_norm
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -357,10 +357,10 @@ end */
     $display ("End NORM <-> INF, NORM <-> NAN");
 
     status_end[4] = 1;
-end*/
+end
 
 initial begin
-    wait (status_end[0]);
+    wait (status_end[4]);
     if (status) $display ("Test Fail...");
     else        $display ("Test Pass!");
 
