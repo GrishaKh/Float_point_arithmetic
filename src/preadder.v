@@ -28,20 +28,18 @@ module preadder (
 
 input sign_A, sign_B;
 input [7:0] exp_A, exp_B;
-input [27:0] mantis_A, mantis_B;
+input [25:0] mantis_A, mantis_B;
 output sign_of_great, sign_of_small;
 output [7:0] exp;
-output [27:0] mantis_great, mantis_small;
-output [1:0] loss;
+output [25:0] mantis_great, mantis_small;
+output loss;
 
-wire [27:0] mantis_shift, mantis_nonshift;
-wire [27:0] mantis_shifted;
+wire [25:0] mantis_shift, mantis_nonshift;
+wire [25:0] mantis_shifted;
 wire [7:0] exp_shift;
 wire [1:0] code_exp, code_mantis;
 wire mantis_swap_code;
 wire shift_select_code = code_exp[1]&(~code_exp[0]);
-
-assign loss[0] = code_mantis[1];
 
 comparator __comparator_exp (
     .in_A (exp_A),
@@ -66,11 +64,11 @@ shifter #(.MODE(1), .DIRECTION(1)) __shifter (
     .mantis (mantis_shift),
     .exp_target_or_diff (exp),
     .mantis_out (mantis_shifted),
-    .loss (loss[1]),
+    .loss (loss),
     .exp_out ()
 );
 
-comparator #(.SIZE(28)) __comparator_mantis (
+comparator #(.SIZE(26)) __comparator_mantis (
     .in_A (mantis_shifted),
     .in_B (mantis_nonshift),
     .out_code(code_mantis)

@@ -8,9 +8,9 @@ module shift_selector (
 
 input comp_code;
 input [7:0] exp_A, exp_B;
-input [27:0] mantis_A, mantis_B;
+input [25:0] mantis_A, mantis_B;
 output reg [7:0] exp_shift, exp_out;
-output reg [27:0] mantis_shift, mantis_out;
+output reg [25:0] mantis_shift, mantis_out;
 
 always @(*) begin
     if (comp_code) begin

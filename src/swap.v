@@ -1,5 +1,5 @@
 module swap (swap_code, in_A, in_B, out_great, out_small);
-parameter SIZE = 28;
+parameter SIZE = 26;
 
 input swap_code;
 input [SIZE-1:0] in_A, in_B;

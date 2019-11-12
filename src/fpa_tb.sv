@@ -1,5 +1,11 @@
 `timescale 1ns/1ps
 
+// `define TEST_ZERO
+// `define TEST_INFINITY
+// `define TEST_NANS
+`define TEST_SUBNORMAL_NUMBERS
+// `define TEST_NORMAL_NUMBERS
+
 module fpa_tb;
 
 reg clk;
@@ -19,7 +25,7 @@ reg [31:0]  number_A_0,
 wire [31:0] number_out [4:0];
 
 initial clk = 1;
-initial for (int i = 0; i < 5; i++) status_end [i] = 1'b0;
+initial for (int i = 0; i < 5; i++) status_end[i] = 1'b0;
 
 function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
     if ($shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)) != num_check)
@@ -77,7 +83,9 @@ top norm (
 
 always #2 clk = ~clk;
 
-/* initial begin : init_zero
+`ifdef TEST_ZERO
+
+initial begin : init_zero
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -127,9 +135,13 @@ always #2 clk = ~clk;
     $display ("End ZERO <-> INF, ZERO <-> NAN");
 
     status_end[0] = 1;
-end */
+end
 
-/*initial begin : init_inf
+`endif
+
+`ifdef TEST_INFINITY
+
+initial begin : init_inf
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -181,9 +193,13 @@ end */
     $display ("End INF <-> INF, INF <-> NAN");
 
     status_end[1] = 1;
-end*/
+end
 
-/*initial begin : init_nan
+`endif
+
+`ifdef TEST_NANS
+
+initial begin : init_nan
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -240,9 +256,13 @@ end*/
     $display ("End NAN <-> INF, NAN <-> NAN");
 
     status_end[2] = 1;
-end*/
+end
 
-/* initial begin : init_sub
+`endif
+
+`ifdef TEST_SUBNORMAL_NUMBERS
+ 
+initial begin : init_sub
     reg sign [1:0];
     reg [7:0] exp [1:0];
     reg [22:0] mantis [1:0];
@@ -296,7 +316,11 @@ end*/
     $display ("End SUB <-> INF, SUB <-> NAN");
 
     status_end[3] = 1;
-end */
+end 
+
+`endif
+
+`ifdef TEST_NORMAL_NUMBERS
 
 initial begin : init_norm
     reg sign [1:0];
@@ -359,8 +383,16 @@ initial begin : init_norm
     status_end[4] = 1;
 end
 
+`endif
+
 initial begin
-    wait (status_end[4]);
+    wait (
+        `ifdef TEST_ZERO                 status_end[0] `endif
+        `ifdef TEST_INFINITY          & status_end[1] `endif
+        `ifdef TEST_NANS              & status_end[2] `endif
+        `ifdef TEST_SUBNORMAL_NUMBERS & status_end[3] `endif
+        `ifdef TEST_NORMAL_NUMBERS    & status_end[4] `endif
+    );
     if (status) $display ("Test Fail...");
     else        $display ("Test Pass!");
 

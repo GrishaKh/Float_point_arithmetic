@@ -7,23 +7,23 @@ output [31:0] number_out;
 wire sign_of_great, sign_of_small;
 wire [7:0] exp_A, exp_B, exp_mantis;
 wire [7:0] exp_preadder, exp_out;
-wire [27:0] ext_mantis_A, ext_mantis_B;
-wire [27:0] mantis_great, mantis_small;
+wire [25:0] ext_mantis_A, ext_mantis_B;
+wire [25:0] mantis_great, mantis_small;
 wire [22:0] mantis_A, mantis_B, mantis_out;
 wire [2:0] type_A, type_B;
 wire special_case;
 wire [31:0] special_result;
-wire [1:0] loss_preadder;
+wire loss_preadder;
 wire loss_adder;
 wire operator_adder;
 
 wire sign_mult, sign_adder;
 wire [7:0] exp_mult, exp_adder;
-wire [27:0] mantis_mult, mantis_adder;
+wire [25:0] mantis_mult, mantis_adder;
 
 wire sign_out = operator ? sign_mult : sign_adder;
 wire [7:0] exp_tmp = operator ? exp_mult : exp_adder;
-wire [27:0] mantis_tmp = operator ? mantis_mult : mantis_adder;
+wire [25:0] mantis_tmp = operator ? mantis_mult : mantis_adder;
 
 assign number_out = special_case & ~operator ? special_result : {sign_out, exp_out, mantis_out};
 
@@ -108,7 +108,7 @@ standardizer __standardizer (
     .operator_in (operator_adder),
     .exp_out (exp_out),
     .mantis_out (mantis_out),
-    .loss ({loss_preadder[1] | loss_adder, loss_preadder[0]})
+    .loss (loss_preadder | loss_adder)
 );
 
 endmodule

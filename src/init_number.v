@@ -11,7 +11,7 @@ input [31:0] number;
 output sign;
 output [7:0] exp;
 output [22:0] mantis;
-output [27:0] ext_mantis;
+output [25:0] ext_mantis;
 output [2:0] type;
 
 div_number __div_number

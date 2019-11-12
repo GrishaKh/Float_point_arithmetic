@@ -8,15 +8,15 @@ module adder (
 
 input sign_A, sign_B;
 input [7:0] exp;
-input [27:0] mantis_A, mantis_B;
+input [25:0] mantis_A, mantis_B;
 output sign;
 output [7:0] exp_out;
-output [27:0] mantis_out;
+output [25:0] mantis_out;
 output loss;
 output operator;
 
 wire carry;
-wire [27:0] mantis_sum, mantis_shifted;
+wire [25:0] mantis_sum, mantis_shifted;
 
 assign operator = sign_A^sign_B;
 assign {carry, mantis_sum} = operator ? mantis_A - mantis_B : mantis_A + mantis_B;
@@ -31,7 +31,7 @@ shifter #(.DIRECTION(1)) __shifter (
     .loss (loss)
 );
 
-assign mantis_out = carry ? {carry, mantis_shifted[26:0]} : mantis_shifted;
+assign mantis_out = carry ? {carry, mantis_shifted[24:0]} : mantis_shifted;
 
 
 endmodule
