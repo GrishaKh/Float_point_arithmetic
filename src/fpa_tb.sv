@@ -6,6 +6,10 @@
 `define TEST_SUBNORMAL_NUMBERS
 // `define TEST_NORMAL_NUMBERS
 
+`define mult
+
+`define always_print
+
 module fpa_tb;
 
 reg clk;
@@ -27,23 +31,28 @@ wire [31:0] number_out [4:0];
 initial clk = 1;
 initial for (int i = 0; i < 5; i++) status_end[i] = 1'b0;
 
+function void print(reg [31:0] num_A, reg [31:0] num_B, num_check);
+    $display ("Fail");
+    $display ("number_A = %b, %f", num_A, $bitstoshortreal(num_A));
+    $display ("number_B = %b, %f", num_B, $bitstoshortreal(num_B));
+    $display ("mult_mantis = %b", sub.__fpa.__mult.mult_mantis);
+    $display ("out_test = %b, %f", num_check, $bitstoshortreal(num_check));
+    $display ("out_real = %b", $shortrealtobits($bitstoshortreal(num_A) `ifdef mult * `else + `endif $bitstoshortreal(num_B)));
+    $write ("\n ******************************* \n");
+endfunction
+
 function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
-    if ($shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)) != num_check)
+    `ifdef always_print
+        print(num_A, num_B, num_check);
+    `endif
+
+    if ($shortrealtobits($bitstoshortreal(num_A) `ifdef mult * `else + `endif $bitstoshortreal(num_B)) != num_check)
     begin
-        $display ("Fail");
-        $display ("number_A = %b, %f", num_A, $bitstoshortreal(num_A));
-        $display ("number_B = %b, %f", num_B, $bitstoshortreal(num_B));
-        $display ("out_test = %b, %f", num_check, $bitstoshortreal(num_check));
-        $display ("out_real = %b", $shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)));
-        $write ("\n ******************************* \n");
+        print(num_A, num_B, num_check);
         status = 1'b1;
         $stop;
     end
-        //$display ("number_A = %b, %d", num_A, $bitstoshortreal(num_A));
-        //$display ("number_B = %b, %d", num_B, $bitstoshortreal(num_B));
-        //$display ("out_test = %b, %d", num_check, $bitstoshortreal(num_check));
-        //$display ("out_real = %b", $shortrealtobits($bitstoshortreal(num_A) + $bitstoshortreal(num_B)));
-        //$write ("\n ******************************* \n");
+
 endfunction
 
 top zero (
