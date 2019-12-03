@@ -30,9 +30,9 @@ round __round (
     .mantis (mantis_norm),
     .sign (sign_in),
     .operator (operator_in),
+    .loss (loss),
     .exp_out (exp_out),
-    .mantis_out (mantis_out),
-    .loss (loss)
+    .mantis_out (mantis_out)
 );
 
 endmodule // standardizer
