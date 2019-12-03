@@ -15,6 +15,8 @@ wire special_case;
 wire [31:0] special_result;
 wire loss_preadder;
 wire loss_adder;
+wire loss_mult;
+wire loss = operator ? loss_mult : loss_preadder | loss_adder;
 wire operator_adder;
 
 wire sign_mult, sign_adder;
@@ -98,17 +100,18 @@ mult __mult (
     .mantis_B (ext_mantis_B),
     .sign (sign_mult),
     .exp (exp_mult),
-    .mantis (mantis_mult)
+    .mantis (mantis_mult),
+    .loss (loss_mult)
 );
 
 standardizer __standardizer (
     .exp_in (exp_tmp),
     .mantis_in (mantis_tmp),
     .sign_in (sign_out),
-    .operator_in (operator_adder),
+    .operator_in (operator_adder & (~operator)),
+    .loss (loss),
     .exp_out (exp_out),
-    .mantis_out (mantis_out),
-    .loss (loss_preadder | loss_adder)
+    .mantis_out (mantis_out)
 );
 
 endmodule

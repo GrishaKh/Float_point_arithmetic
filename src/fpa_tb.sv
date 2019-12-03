@@ -6,9 +6,9 @@
 `define TEST_SUBNORMAL_NUMBERS
 // `define TEST_NORMAL_NUMBERS
 
-`define mult
+// `define mult
 
-`define always_print
+// `define always_print
 
 module fpa_tb;
 
