@@ -1,7 +1,6 @@
-module fpa (number_A, number_B, operator, number_out);
+module fpa (number_A, number_B, number_out);
 
 input [31:0] number_A, number_B;
-input operator;
 output [31:0] number_out;
 
 wire sign_of_great, sign_of_small;
@@ -15,19 +14,14 @@ wire special_case;
 wire [31:0] special_result;
 wire loss_preadder;
 wire loss_adder;
-wire loss_mult;
-wire loss = operator ? loss_mult : loss_preadder | loss_adder;
+wire loss = loss_preadder | loss_adder;
 wire operator_adder;
 
-wire sign_mult, sign_adder;
-wire [7:0] exp_mult, exp_adder;
-wire [25:0] mantis_mult, mantis_adder;
+wire sign_adder;
+wire [7:0] exp_adder;
+wire [25:0] mantis_adder;
 
-wire sign_out = operator ? sign_mult : sign_adder;
-wire [7:0] exp_tmp = operator ? exp_mult : exp_adder;
-wire [25:0] mantis_tmp = operator ? mantis_mult : mantis_adder;
-
-assign number_out = special_case & ~operator ? special_result : {sign_out, exp_out, mantis_out};
+assign number_out = special_case ? special_result : {sign_adder, exp_out, mantis_out};
 
 init_number __number_A
 (
@@ -91,24 +85,11 @@ adder __adder (
     .operator(operator_adder)
 );
 
-mult __mult (
-    .sign_A (sign_A),
-    .sign_B (sign_B),
-    .exp_A (exp_A),
-    .exp_B (exp_B),
-    .mantis_A (ext_mantis_A),
-    .mantis_B (ext_mantis_B),
-    .sign (sign_mult),
-    .exp (exp_mult),
-    .mantis (mantis_mult),
-    .loss (loss_mult)
-);
-
 standardizer __standardizer (
-    .exp_in (exp_tmp),
-    .mantis_in (mantis_tmp),
-    .sign_in (sign_out),
-    .operator_in (operator_adder & (~operator)),
+    .exp_in (exp_adder),
+    .mantis_in (mantis_adder),
+    .sign_in (sign_adder),
+    .operator_in (operator_adder),
     .loss (loss),
     .exp_out (exp_out),
     .mantis_out (mantis_out)
