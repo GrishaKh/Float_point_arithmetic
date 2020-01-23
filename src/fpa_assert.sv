@@ -36,8 +36,8 @@ function void check_equiv (reg [31:0] num_A, reg [31:0] num_B, num_check);
         print(num_A, num_B, num_check);
     `endif
 
-    if ($shortrealtobits($bitstoshortreal(num_A) `ifdef mult * `else + `endif $bitstoshortreal(num_B)) != num_check)
-    begin
+    assert ($shortrealtobits($bitstoshortreal(num_A) `ifdef mult * `else + `endif $bitstoshortreal(num_B)) == num_check)
+    else begin
         print(num_A, num_B, num_check);
         status = 1'b1;
         $stop;
