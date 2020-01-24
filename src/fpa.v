@@ -4,7 +4,7 @@ input [31:0] number_A, number_B;
 output [31:0] number_out;
 
 wire sign_of_great, sign_of_small;
-wire [7:0] exp_A, exp_B, exp_mantis;
+wire [7:0] exp_A, exp_B;
 wire [7:0] exp_preadder, exp_out;
 wire [25:0] ext_mantis_A, ext_mantis_B;
 wire [25:0] mantis_great, mantis_small;
@@ -88,7 +88,6 @@ adder __adder (
 standardizer __standardizer (
     .exp_in (exp_adder),
     .mantis_in (mantis_adder),
-    .sign_in (sign_adder),
     .operator_in (operator_adder),
     .loss (loss),
     .exp_out (exp_out),

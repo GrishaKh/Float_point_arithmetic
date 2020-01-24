@@ -1,10 +1,9 @@
 module standardizer (
-    sign_in, exp_in, mantis_in,
+    exp_in, mantis_in,
     operator_in, loss,
     exp_out, mantis_out
 );
 
-input sign_in;
 input [7:0] exp_in;
 input [25:0] mantis_in;
 input loss;
@@ -28,7 +27,6 @@ assign mantis_out = mantis_norm[23:1];*/
 round __round (
     .exp (exp_norm),
     .mantis (mantis_norm),
-    .sign (sign_in),
     .operator (operator_in),
     .loss (loss),
     .exp_out (exp_out),

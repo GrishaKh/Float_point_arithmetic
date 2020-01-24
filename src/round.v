@@ -1,6 +1,5 @@
-module round (exp, mantis, sign, operator, loss, mantis_out, exp_out);
+module round (exp, mantis, operator, loss, mantis_out, exp_out);
 
-input sign;
 input [7:0] exp;
 input [25:0] mantis;
 input loss;

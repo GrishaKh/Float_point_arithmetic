@@ -47,13 +47,9 @@ always @(*) begin
         if (type_B == NORMAL || type_B == SUBNORMAL) begin
             result = {sign_A, exp_A, mantis_A};
         end
-        else if (type_B == INF) begin
+        else begin // type_B == INF
             if (sign_A == sign_B) result = {sign_A, 8'hFF, 23'h0};
             else                  result = {1'b1, 8'hFF, 1'b1, 22'h0};
-        end
-        else begin
-            if (sign_A == sign_B) result = {sign_B, exp_B, mantis_B};
-            else                  result = {1'b1, 8'hFF, 23'h000001};
         end
     end
     else if (type_B == INF) begin
