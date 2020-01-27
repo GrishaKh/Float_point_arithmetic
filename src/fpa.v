@@ -1,27 +1,41 @@
 module fpa (number_A, number_B, number_out);
 
-input [31:0] number_A, number_B;
+// Inputs
+input [31:0] number_A;
+input [31:0] number_B;
+
+// Outputs
 output [31:0] number_out;
 
-wire sign_of_great, sign_of_small;
-wire [7:0] exp_A, exp_B;
-wire [7:0] exp_preadder, exp_out;
-wire [25:0] ext_mantis_A, ext_mantis_B;
-wire [25:0] mantis_great, mantis_small;
-wire [22:0] mantis_A, mantis_B, mantis_out;
-wire [2:0] type_A, type_B;
-wire special_case;
-wire [31:0] special_result;
-wire loss_preadder;
-wire loss_adder;
-wire loss = loss_preadder | loss_adder;
-wire operator_adder;
-
-wire sign_adder;
-wire [7:0] exp_adder;
+// Wires and regs
+wire        sign_of_great;
+wire        sign_of_small;
+wire [7:0]  exp_A;
+wire [7:0]  exp_B;
+wire [7:0]  exp_preadder;
+wire [7:0]  exp_adder;
+wire [7:0]  exp_out;
+wire [25:0] ext_mantis_A;
+wire [25:0] ext_mantis_B;
+wire [25:0] mantis_great;
+wire [25:0] mantis_small;
+wire [22:0] mantis_A;
+wire [22:0] mantis_B;
 wire [25:0] mantis_adder;
+wire [22:0] mantis_out;
+wire [2:0]  type_A;
+wire [2:0]  type_B;
+wire [31:0] special_result;
+wire        special_case;
+wire        loss_preadder;
+wire        loss_adder;
+wire        loss;
+wire        operator_adder;
+wire        sign_adder;
 
-assign number_out = special_case ? special_result : {sign_adder, exp_out, mantis_out};
+assign loss       = loss_preadder | loss_adder;
+assign number_out = special_case ? special_result :
+                                   {sign_adder, exp_out, mantis_out};
 
 init_number __number_A
 (
@@ -43,7 +57,8 @@ init_number __number_B
     .type (type_B)
 );
 
-preadder __preadder (
+preadder __preadder
+(
     .sign_A (sign_A),
     .sign_B (sign_B),
     .exp_A (exp_A),
@@ -72,7 +87,8 @@ special_cases __special_cases
     .special_case (special_case)
 );
 
-adder __adder (
+adder __adder
+(
     .sign_A (sign_of_great),
     .sign_B (sign_of_small),
     .exp (exp_preadder),
@@ -85,7 +101,8 @@ adder __adder (
     .operator(operator_adder)
 );
 
-standardizer __standardizer (
+standardizer __standardizer
+(
     .exp_in (exp_adder),
     .mantis_in (mantis_adder),
     .operator_in (operator_adder),

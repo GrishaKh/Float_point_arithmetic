@@ -1,10 +1,15 @@
 module special_cases
 (
-    sign_A, sign_B,
-    exp_A, exp_B,
-    mantis_A, mantis_B,
-    type_A, type_B,
-    result, special_case
+    sign_A,
+    sign_B,
+    exp_A,
+    exp_B,
+    mantis_A,
+    mantis_B,
+    type_A,
+    type_B,
+    result,
+    special_case
 );
 
 parameter [2:0] ZERO      = 3'b000,
@@ -13,12 +18,17 @@ parameter [2:0] ZERO      = 3'b000,
                 NORMAL    = 3'b011,
                 NAN       = 3'b100;
 
-input sign_A, sign_B;
-input [7:0] exp_A, exp_B;
-input [22:0] mantis_A, mantis_B;
-input [2:0] type_A, type_B;
+input        sign_A;
+input        sign_B;
+input [7:0]  exp_A;
+input [7:0]  exp_B;
+input [22:0] mantis_A;
+input [22:0] mantis_B;
+input [2:0]  type_A;
+input [2:0]  type_B;
+
 output reg [31:0] result;
-output reg special_case;
+output reg        special_case;
 
 always @(*) begin
     if (type_A == NAN && type_B == NAN) begin
@@ -30,17 +40,17 @@ always @(*) begin
     end
     else if (type_A == ZERO && type_B == ZERO) begin
         special_case = 1'b1;
-        result = {sign_A&sign_B, 31'h0};
+        result       = {sign_A&sign_B, 31'h0};
     end
     else if (type_A == ZERO || type_B == NAN) begin
         special_case = 1'b1;
-        result = type_B == NAN ? {sign_B, exp_B, 1'b1, mantis_B[21:0]}:
-				 {sign_B, exp_B, mantis_B};
+        result       = type_B == NAN ? {sign_B, exp_B, 1'b1, mantis_B[21:0]}:
+				                       {sign_B, exp_B, mantis_B};
     end
     else if (type_B == ZERO || type_A == NAN) begin
         special_case = 1'b1;
-        result = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}: 
-		                         {sign_A, exp_A, mantis_A};
+        result       = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[21:0]}: 
+		                               {sign_A, exp_A, mantis_A};
     end
     else if (type_A == INF) begin
         special_case = 1'b1;
@@ -54,12 +64,12 @@ always @(*) begin
     end
     else if (type_B == INF) begin
         special_case = 1'b1;
-        result = {sign_B, exp_B, mantis_B};
+        result       = {sign_B, exp_B, mantis_B};
     end
     else begin
         special_case = 1'b0;
-        result = 32'h00000000;
+        result       = 32'h00000000;
     end
 end
 
-endmodule
+endmodule // special cases

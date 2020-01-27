@@ -1,7 +1,7 @@
 primitive mantis_swap_detect (swap, shift_code, s_A, s_B, m_code_1, m_code_0);
 
 output swap;
-input shift_code, s_A, s_B, m_code_1, m_code_0;
+input  shift_code, s_A, s_B, m_code_1, m_code_0;
 
 table
 //  shift_code  s_A     s_B     m_code_1    m_code_0    :   swap
@@ -16,38 +16,56 @@ table
     1           1       0       0           0           :   0;
 endtable
 
-endprimitive
+endprimitive // mantis_swap_detect
 
-module preadder (
-    sign_A, sign_B,
-    exp_A, exp_B,
-    mantis_A, mantis_B,
-    sign_of_great, sign_of_small, exp, 
-    mantis_great, mantis_small, loss
+module preadder
+(
+    sign_A,
+    sign_B,
+    exp_A,
+    exp_B,
+    mantis_A,
+    mantis_B,
+    sign_of_great,
+    sign_of_small,
+    exp, 
+    mantis_great,
+    mantis_small,
+    loss
 );
 
-input sign_A, sign_B;
-input [7:0] exp_A, exp_B;
-input [25:0] mantis_A, mantis_B;
-output sign_of_great, sign_of_small;
-output [7:0] exp;
-output [25:0] mantis_great, mantis_small;
-output loss;
+input        sign_A;
+input        sign_B;
+input [7:0]  exp_A;
+input [7:0]  exp_B;
+input [25:0] mantis_A;
+input [25:0] mantis_B;
+
+output        sign_of_great;
+output        sign_of_small;
+output [7:0]  exp;
+output [25:0] mantis_great;
+output [25:0] mantis_small;
+output        loss;
 
 wire [25:0] mantis_shift, mantis_nonshift;
 wire [25:0] mantis_shifted;
-wire [7:0] exp_shift;
-wire [1:0] code_exp, code_mantis;
-wire mantis_swap_code;
-wire shift_select_code = code_exp[1]&(~code_exp[0]);
+wire [7:0]  exp_shift;
+wire [1:0]  code_exp, code_mantis;
+wire        mantis_swap_code;
+wire        shift_select_code;
 
-comparator __comparator_exp (
+assign shift_select_code = code_exp[1]&(~code_exp[0]);
+
+comparator __comparator_exp
+(
     .in_A (exp_A),
     .in_B (exp_B),
     .out_code (code_exp)
 );
 
-shift_selector __shift_selector (
+shift_selector __shift_selector
+(
     .comp_code (shift_select_code),
     .exp_A (exp_A),
     .exp_B (exp_B),
@@ -59,7 +77,13 @@ shift_selector __shift_selector (
     .exp_out (exp)
 );
 
-shifter #(.MODE(1), .DIRECTION(1)) __shifter (
+shifter
+#(
+    .MODE(1),
+    .DIRECTION(1)
+)
+__shifter
+(
     .exp (exp_shift),
     .mantis (mantis_shift),
     .exp_target_or_diff (exp),
@@ -68,14 +92,20 @@ shifter #(.MODE(1), .DIRECTION(1)) __shifter (
     .exp_out ()
 );
 
-comparator #(.SIZE(26)) __comparator_mantis (
+comparator
+#(
+    .SIZE(26)
+)
+__comparator_mantis
+(
     .in_A (mantis_shifted),
     .in_B (mantis_nonshift),
-    .out_code(code_mantis)
+    .out_code (code_mantis)
 );
 
 mantis_swap_detect __mantis_swap_code
-(   mantis_swap_code,
+(
+    mantis_swap_code,
     shift_select_code,
     sign_A,
     sign_B,
@@ -83,7 +113,8 @@ mantis_swap_detect __mantis_swap_code
     code_mantis[0]
 );
 
-swap __swap_mantis (
+swap __swap_mantis
+(
     .swap_code (mantis_swap_code),
     .in_A (mantis_shifted),
     .in_B (mantis_nonshift),
@@ -91,7 +122,12 @@ swap __swap_mantis (
     .out_small (mantis_small)
 );
 
-swap #(.SIZE(1)) __swap_sign (
+swap
+#(
+    .SIZE(1)
+)
+__swap_sign
+(
     .swap_code (shift_select_code^mantis_swap_code),
     .in_A (sign_A),
     .in_B (sign_B),

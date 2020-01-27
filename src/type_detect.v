@@ -1,7 +1,13 @@
-module type_detect (exp, mantis, type);
+module type_detect
+(
+    exp,
+    mantis,
+    type
+);
 
-input [7:0] exp;
+input [7:0]  exp;
 input [22:0] mantis;
+
 output reg [2:0] type;
 
 parameter [2:0] ZERO      = 3'b000,
@@ -24,4 +30,4 @@ always @(*) begin
     end
 end
 
-endmodule
+endmodule // type_detect

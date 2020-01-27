@@ -1,4 +1,5 @@
-module init_number (
+module init_number
+(
     number,
     sign,
     exp,
@@ -8,11 +9,12 @@ module init_number (
 );
 
 input [31:0] number;
-output sign;
-output [7:0] exp;
+
+output        sign;
+output [7:0]  exp;
 output [22:0] mantis;
 output [25:0] ext_mantis;
-output [2:0] type;
+output [2:0]  type;
 
 div_number __div_number
 (
@@ -29,7 +31,8 @@ type_detect __type_number
     .mantis (mantis)
 );
 
-extender __extender (
+extender __extender
+(
     .mantis (mantis),
     .type_number (type),
     .mantis_out (ext_mantis)
