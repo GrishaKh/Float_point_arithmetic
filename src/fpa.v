@@ -1,42 +1,56 @@
-module fpa (number_A, number_B, number_out);
+`include "configuration.v"
+
+module fpa
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
+(
+    number_A,
+    number_B,
+    number_out
+);
+
 
 // Inputs
-input [31:0] number_A;
-input [31:0] number_B;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B;
 
 // Outputs
-output [31:0] number_out;
+output [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out;
 
-// Wires and regs
-wire        sign_of_great;
-wire        sign_of_small;
-wire [7:0]  exp_A;
-wire [7:0]  exp_B;
-wire [7:0]  exp_preadder;
-wire [7:0]  exp_adder;
-wire [7:0]  exp_out;
-wire [25:0] ext_mantis_A;
-wire [25:0] ext_mantis_B;
-wire [25:0] mantis_great;
-wire [25:0] mantis_small;
-wire [22:0] mantis_A;
-wire [22:0] mantis_B;
-wire [25:0] mantis_adder;
-wire [22:0] mantis_out;
-wire [2:0]  type_A;
-wire [2:0]  type_B;
-wire [31:0] special_result;
-wire        special_case;
-wire        loss_preadder;
-wire        loss_adder;
-wire        loss;
-wire        operator_adder;
-wire        sign_adder;
+// Wires
+wire                       sign_of_great;
+wire                       sign_of_small;
+wire [ EXP_SIZE      -1:0] exp_A;
+wire [ EXP_SIZE      -1:0] exp_B;
+wire [ EXP_SIZE      -1:0] exp_preadder;
+wire [ EXP_SIZE      -1:0] exp_adder;
+wire [ EXP_SIZE      -1:0] exp_out;
+wire [(MANTIS_SIZE+3)-1:0] ext_mantis_A;
+wire [(MANTIS_SIZE+3)-1:0] ext_mantis_B;
+wire [(MANTIS_SIZE+3)-1:0] mantis_great;
+wire [(MANTIS_SIZE+3)-1:0] mantis_small;
+wire [ MANTIS_SIZE   -1:0] mantis_A;
+wire [ MANTIS_SIZE   -1:0] mantis_B;
+wire [(MANTIS_SIZE+3)-1:0] mantis_adder;
+wire [ MANTIS_SIZE   -1:0] mantis_out;
+wire [2:0]                 type_A;
+wire [2:0]                 type_B;
+wire [31:0]                special_result;
+wire                       special_case;
+wire                       loss_preadder;
+wire                       loss_adder;
+wire                       loss;
+wire                       operator_adder;
+wire                       sign_adder;
 
+// Assignes
 assign loss       = loss_preadder | loss_adder;
 assign number_out = special_case ? special_result :
                                    {sign_adder, exp_out, mantis_out};
 
+// Instances
 init_number __number_A
 (
     .number     (number_A),
@@ -111,4 +125,4 @@ standardizer __standardizer
     .mantis_out  (mantis_out)
 );
 
-endmodule
+endmodule // fpa

@@ -1,6 +1,8 @@
+`include "configuration.v"
+
 module comparator
 #(
-    parameter SIZE = 8
+    parameter SIZE = `EXP_SIZE
 )
 (
     in_A,

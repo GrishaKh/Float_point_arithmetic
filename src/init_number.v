@@ -1,4 +1,10 @@
+`include "configuration.v"
+
 module init_number
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     number,
     sign,
@@ -8,14 +14,17 @@ module init_number
     type
 );
 
-input [31:0] number;
+// Inputs
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number;
 
-output        sign;
-output [7:0]  exp;
-output [22:0] mantis;
-output [25:0] ext_mantis;
-output [2:0]  type;
+// Outputs
+output                       sign;
+output [EXP_SIZE       -1:0] exp;
+output [ MANTIS_SIZE   -1:0] mantis;
+output [(MANTIS_SIZE+3)-1:0] ext_mantis;
+output [2:0]                 type;
 
+//Instances
 div_number __div_number
 (
     .number (number),

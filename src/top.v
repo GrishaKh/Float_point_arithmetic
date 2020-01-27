@@ -1,4 +1,10 @@
+`include "configuration.v"
+
 module top
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     clk,
     rst,
@@ -7,17 +13,21 @@ module top
     number_out
 );
 
+// Inputs
 input        clk;
 input        rst;
-input [31:0] number_A;
-input [31:0] number_B;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B;
 
-output reg [31:0] number_out;
+// Outputs
+output reg [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out;
 
-reg  [31:0] number_A_reg;
-reg  [31:0] number_B_reg;
-wire [31:0] number;
+// Wires and regs
+reg  [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A_reg;
+reg  [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B_reg;
+wire [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number;
 
+// Instances
 fpa __fpa
 (
     .number_A   (number_A_reg),
@@ -25,12 +35,13 @@ fpa __fpa
     .number_out (number)
 );
 
+// Sequential block
 always @(posedge clk or negedge rst)
 begin
     if (~rst) begin
-        number_A_reg <= 32'h0;
-        number_B_reg <= 32'h0;
-        number_out   <= 32'h0;
+        number_A_reg <= {(1+EXP_SIZE+MANTIS_SIZE){1'b0}};
+        number_B_reg <= {(1+EXP_SIZE+MANTIS_SIZE){1'b0}};
+        number_out   <= {(1+EXP_SIZE+MANTIS_SIZE){1'b0}};
     end
     else begin
         number_A_reg <= number_A;

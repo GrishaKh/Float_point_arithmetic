@@ -1,3 +1,5 @@
+`include "configuration.v"
+
 primitive mantis_swap_detect (swap, shift_code, s_A, s_B, m_code_1, m_code_0);
 
 output swap;
@@ -19,6 +21,10 @@ endtable
 endprimitive // mantis_swap_detect
 
 module preadder
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     sign_A,
     sign_B,
@@ -34,31 +40,36 @@ module preadder
     loss
 );
 
-input        sign_A;
-input        sign_B;
-input [7:0]  exp_A;
-input [7:0]  exp_B;
-input [25:0] mantis_A;
-input [25:0] mantis_B;
+// Inputs
+input                       sign_A;
+input                       sign_B;
+input [ EXP_SIZE      -1:0] exp_A;
+input [ EXP_SIZE      -1:0] exp_B;
+input [(MANTIS_SIZE+3)-1:0] mantis_A;
+input [(MANTIS_SIZE+3)-1:0] mantis_B;
 
-output        sign_of_great;
-output        sign_of_small;
-output [7:0]  exp;
-output [25:0] mantis_great;
-output [25:0] mantis_small;
-output        loss;
+// Outputs
+output                       sign_of_great;
+output                       sign_of_small;
+output [ EXP_SIZE      -1:0] exp;
+output [(MANTIS_SIZE+3)-1:0] mantis_great;
+output [(MANTIS_SIZE+3)-1:0] mantis_small;
+output                       loss;
 
-wire [25:0] mantis_shiftt;
-wire [25:0] mantis_nonshift;
-wire [25:0] mantis_shifted;
-wire [7:0]  exp_shift;
-wire [1:0]  code_exp;
-wire [1:0]  code_mantis;
-wire        mantis_swap_code;
-wire        shift_select_code;
+// Wires
+wire [(MANTIS_SIZE+3)-1:0] mantis_shift;
+wire [(MANTIS_SIZE+3)-1:0] mantis_nonshift;
+wire [(MANTIS_SIZE+3)-1:0] mantis_shifted;
+wire [ EXP_SIZE      -1:0] exp_shift;
+wire [1:0]                 code_exp;
+wire [1:0]                 code_mantis;
+wire                       mantis_swap_code;
+wire                       shift_select_code;
 
+// Assignments
 assign shift_select_code = code_exp[1]&(~code_exp[0]);
 
+// Instances
 comparator __comparator_exp
 (
     .in_A     (exp_A),

@@ -1,4 +1,10 @@
+`include "configuration.v"
+
 module standardizer
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     exp_in,
     mantis_in,
@@ -8,16 +14,16 @@ module standardizer
     mantis_out
 );
 
-input [7:0]  exp_in;
-input [25:0] mantis_in;
-input        loss;
-input        operator_in;
+input [ EXP_SIZE      -1:0] exp_in;
+input [(MANTIS_SIZE+3)-1:0] mantis_in;
+input                       loss;
+input                       operator_in;
 
-output [7:0]  exp_out;
-output [22:0] mantis_out;
+output [EXP_SIZE   -1:0] exp_out;
+output [MANTIS_SIZE-1:0] mantis_out;
 
-wire [7:0]  exp_norm;
-wire [25:0] mantis_norm;
+wire [ EXP_SIZE      -1:0] exp_norm;
+wire [(MANTIS_SIZE+3)-1:0] mantis_norm;
 
 normalize __normalize
 (

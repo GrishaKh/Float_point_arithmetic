@@ -1,4 +1,10 @@
+`include "configuration.v"
+
 module shift_selector
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     comp_code,
     exp_A,
@@ -11,17 +17,20 @@ module shift_selector
     mantis_out
 );
 
-input        comp_code;
-input [7:0]  exp_A;
-input [7:0]  exp_B;
-input [25:0] mantis_A;
-input [25:0] mantis_B;
+// Inputs
+input                       comp_code;
+input [ EXP_SIZE      -1:0] exp_A;
+input [ EXP_SIZE      -1:0] exp_B;
+input [(MANTIS_SIZE+3)-1:0] mantis_A;
+input [(MANTIS_SIZE+3)-1:0] mantis_B;
 
-output reg [7:0]  exp_shift;
-output reg [7:0]  exp_out;
-output reg [25:0] mantis_shift;
-output reg [25:0] mantis_out;
+// Outputs
+output reg [ EXP_SIZE      -1:0] exp_shift;
+output reg [ EXP_SIZE      -1:0] exp_out;
+output reg [(MANTIS_SIZE+3)-1:0] mantis_shift;
+output reg [(MANTIS_SIZE+3)-1:0] mantis_out;
 
+// Combinational block
 always @(*) begin
     if (comp_code) begin
         mantis_shift = mantis_B;

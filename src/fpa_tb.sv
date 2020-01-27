@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`include "configuration.v"
+`include "configuration_sim.v"
 
 module fpa_tb;
 

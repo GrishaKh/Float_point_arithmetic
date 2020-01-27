@@ -1,4 +1,10 @@
+`include "configuration.v"
+
 module div_number
+#(
+    parameter EXP_SIZE    = `EXP_SIZE,
+    parameter MANTIS_SIZE = `MANTIS_SIZE
+)
 (
     number,
     sign,
@@ -6,11 +12,11 @@ module div_number
     mantis
 );
 
-input [31:0] number;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number;
 
-output        sign;
-output [7:0]  exp;
-output [22:0] mantis;
+output                   sign;
+output [EXP_SIZE   -1:0] exp;
+output [MANTIS_SIZE-1:0] mantis;
 
 assign {sign, exp, mantis} = number;
 

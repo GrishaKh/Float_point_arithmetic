@@ -1,13 +1,24 @@
-// ************** FPA TEST ********************** //
+// `define HALF_PRECISION
+`define SINGLE_PRECISION
+// `define DOUBLE_PRECISION
 
-`define TEST_ZERO
-// `define TEST_INFINITY
-// `define TEST_NANS
-// `define TEST_SUBNORMAL_NUMBERS
-// `define TEST_NORMAL_NUMBERS
+`ifdef HALF_PRECISION
+    `define EXP_SIZE     5
+    `define MANTIS_SIZE 10
+`elsif DOUBLE_PRECISION
+    `define EXP_SIZE    11
+    `define MANTIS_SIZE 52
+`else
+    `define EXP_SIZE    8
+    `define MANTIS_SIZE 23
+`endif
 
-// --------- Adder / Multiplier ------------ //
-// `define mult
+`define NUMBER_SIZE (1 + EXP_SIZE + MANTIS_SIZE)
 
-// ---------- Print all checks for debug ------------ //
-// `define always_print
+// localparam EXP_SIZE = PRECISION == HALF   ? 5 :
+//                       PRECISION == SINGLE ? 8 :
+//                                             11;
+// 
+// localparam MANTIS_SIZE = PRECISION == HALF   ? 10:
+//                          PRECISION == SINGLE ? 23:
+//                                                52;

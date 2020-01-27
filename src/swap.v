@@ -1,6 +1,8 @@
+`include "configuration.v"
+
 module swap
 #(
-    parameter SIZE = 26
+    parameter SIZE = `MANTIS_SIZE+3
 )
 (
     swap_code,

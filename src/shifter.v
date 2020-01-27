@@ -1,7 +1,11 @@
+`include "configuration.v"
+
 module shifter
 #(
-    parameter DIRECTION = 0, // 0-left, 1-right
-    parameter MODE      = 0  // 0-diff, 1-exp_target
+    parameter EXP_SIZE       = `EXP_SIZE,
+    parameter MANTIS_SIZE    = `MANTIS_SIZE,
+    parameter DIRECTION      = 0, // 0-left, 1-right
+    parameter MODE           = 0  // 0-diff, 1-exp_target
 )
 (
     exp,
@@ -12,19 +16,23 @@ module shifter
     loss
 );
 
-input [7:0]  exp;
-input [7:0]  exp_target_or_diff;
-input [25:0] mantis;
+// Inputs
+input [ EXP_SIZE      -1:0] exp;
+input [ EXP_SIZE      -1:0] exp_target_or_diff;
+input [(MANTIS_SIZE+3)-1:0] mantis;
 
-output [7:0]  exp_out;
-output [25:0] mantis_out;
-output        loss;
+// Outputs
+output [ EXP_SIZE      -1:0] exp_out;
+output [(MANTIS_SIZE+3)-1:0] mantis_out;
+output                       loss;
 //output overflow;
 
-wire [7:0]  shift_number;
-wire [51:0] tmp;
-tri0        overflow;
+// Wires
+wire [    EXP_SIZE       -1:0] shift_number;
+wire [(2*(MANTIS_SIZE+3))-1:0] tmp;
+tri0                           overflow;
 
+// Generate block
 generate
     if (MODE) begin
         assign exp_out      = exp_target_or_diff;
@@ -35,11 +43,12 @@ generate
         else           assign exp_out             = exp - exp_target_or_diff;
         assign shift_number = exp_target_or_diff;
     end
-    if (DIRECTION) assign tmp = !overflow && !(&exp_out) && shift_number < 52 ? ({mantis, 26'h0000000} >> shift_number) : {52{1'b0}};
-    else           assign tmp = ({mantis, 26'h0000000} << shift_number);
+    if (DIRECTION) assign tmp = !overflow && !(&exp_out) && shift_number < (2*(MANTIS_SIZE+3)) ?
+                          ({mantis, {(MANTIS_SIZE+3){1'b0}}} >> shift_number): {(2*(MANTIS_SIZE+3)){1'b0}};
+    else           assign tmp = ({mantis, {(MANTIS_SIZE+3){1'b0}}} << shift_number);
 
-    assign loss       = |tmp[25:0];
-    assign mantis_out = tmp[51:26];
+    assign loss       = |tmp[(MANTIS_SIZE+3)-1:0];
+    assign mantis_out =  tmp[(2*(MANTIS_SIZE+3))-1:(MANTIS_SIZE+3)];
 endgenerate
 
 endmodule // shifter

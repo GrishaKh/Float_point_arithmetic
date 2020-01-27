@@ -1,3 +1,5 @@
+`include "configuration.v"
+
 module normalize
 #(
     parameter SIZE_MANTIS = 26,
