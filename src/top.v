@@ -20,8 +20,8 @@ wire [31:0] number;
 
 fpa __fpa
 (
-    .number_A (number_A_reg),
-    .number_B (number_B_reg),
+    .number_A   (number_A_reg),
+    .number_B   (number_B_reg),
     .number_out (number)
 );
 

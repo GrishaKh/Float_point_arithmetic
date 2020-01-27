@@ -41,12 +41,12 @@ shifter
 )
 __shifter
 (
-    .exp (exp),
+    .exp                (exp),
     .exp_target_or_diff ({{7{1'b0}}, carry}),
-    .mantis(mantis_sum),
-    .exp_out (exp_tmp),
-    .mantis_out (mantis_shifted),
-    .loss (loss)
+    .mantis             (mantis_sum),
+    .exp_out            (exp_tmp),
+    .mantis_out         (mantis_shifted),
+    .loss               (loss)
 );
 
 assign mantis_out = carry ? {carry, mantis_shifted[24:0]}:

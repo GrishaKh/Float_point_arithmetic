@@ -47,46 +47,46 @@ endfunction
 
 top zero
 (
-    .clk (clk),
-    .rst (),
-    .number_A (number_A_0),
-    .number_B (number_B_0),
+    .clk        (clk),
+    .rst        (),
+    .number_A   (number_A_0),
+    .number_B   (number_B_0),
     .number_out (number_out[0])
 );
 
 top inf
 (
-    .clk (clk),
-    .rst (),
-    .number_A (number_A_1),
-    .number_B (number_B_1),
+    .clk        (clk),
+    .rst        (),
+    .number_A   (number_A_1),
+    .number_B   (number_B_1),
     .number_out (number_out[1])
 );
 
 top nan
 (
-    .clk (clk),
-    .rst (),
-    .number_A (number_A_2),
-    .number_B (number_B_2),
+    .clk        (clk),
+    .rst        (),
+    .number_A   (number_A_2),
+    .number_B   (number_B_2),
     .number_out (number_out[2])
 );
 
 top sub
 (
-    .clk (clk),
-    .rst (),
-    .number_A (number_A_3),
-    .number_B (number_B_3),
+    .clk        (clk),
+    .rst        (),
+    .number_A   (number_A_3),
+    .number_B   (number_B_3),
     .number_out (number_out[3])
 );
 
 top norm
 (
-    .clk (clk),
-    .rst (),
-    .number_A (number_A_4),
-    .number_B (number_B_4),
+    .clk        (clk),
+    .rst        (),
+    .number_A   (number_A_4),
+    .number_B   (number_B_4),
     .number_out (number_out[4])
 );
 

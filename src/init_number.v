@@ -19,23 +19,23 @@ output [2:0]  type;
 div_number __div_number
 (
     .number (number),
-    .sign (sign),
-    .exp (exp),
+    .sign   (sign),
+    .exp    (exp),
     .mantis (mantis)
 );
 
 type_detect __type_number
 (
-    .type (type),
-    .exp (exp),
+    .type   (type),
+    .exp    (exp),
     .mantis (mantis)
 );
 
 extender __extender
 (
-    .mantis (mantis),
+    .mantis      (mantis),
     .type_number (type),
-    .mantis_out (ext_mantis)
+    .mantis_out  (ext_mantis)
 );
 
 

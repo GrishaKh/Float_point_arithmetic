@@ -21,19 +21,19 @@ wire [25:0] mantis_norm;
 
 normalize __normalize
 (
-    .exp_in (exp_in),
-    .mantis_in (mantis_in),
-    .exp_out (exp_norm),
+    .exp_in     (exp_in),
+    .mantis_in  (mantis_in),
+    .exp_out    (exp_norm),
     .mantis_out (mantis_norm)
 );
 
 round __round
 (
-    .exp (exp_norm),
-    .mantis (mantis_norm),
-    .operator (operator_in),
-    .loss (loss),
-    .exp_out (exp_out),
+    .exp        (exp_norm),
+    .mantis     (mantis_norm),
+    .operator   (operator_in),
+    .loss       (loss),
+    .exp_out    (exp_out),
     .mantis_out (mantis_out)
 );
 
