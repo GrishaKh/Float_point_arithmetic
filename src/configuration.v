@@ -1,16 +1,24 @@
+//////////////////////////////////////////////////////
+//                                                  //
+//  FLOATING POINT NUMBERS ADDER CONFIGURATION      //
+//                                                  //
+//  For half precission format: delete comment      //
+//  HALF_PRECISION line and comment other lines.    //
+//                                                  //
+//  For single preciion format: delete comment      //
+//  SINGLE_PRECISION line and comment other lines.  //
+//                                                  //
+//  For double precision format: delete comment     //
+//  DOUBLE_PRECICION line and comment other lines.  //
+//                                                  //
+//  By default precision: single precision.         //
+//                                                  //
+// ///////////////////////////////////////////////////
+
+// TODO
 // `define HALF_PRECISION
 // `define SINGLE_PRECISION
 `define DOUBLE_PRECISION
 
-`ifdef HALF_PRECISION
-    `define EXP_SIZE     5
-    `define MANTIS_SIZE 10
-`elsif DOUBLE_PRECISION
-    `define EXP_SIZE    11
-    `define MANTIS_SIZE 52
-`else
-    `define EXP_SIZE    8
-    `define MANTIS_SIZE 23
-`endif
-
-`define NUMBER_SIZE (1 + EXP_SIZE + MANTIS_SIZE)
+// Do not change the line below it
+`include "constants.v"
