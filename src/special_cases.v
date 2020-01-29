@@ -45,9 +45,9 @@ always @(*) begin
         special_case = 1'b1;
         result = (mantis_A[MANTIS_SIZE-1:0] >= mantis_B[MANTIS_SIZE-1:0]) ? 
                  (mantis_A[MANTIS_SIZE-1:0] == mantis_B[MANTIS_SIZE-1:0]) ?
-                                                      {sign_A&sign_B, exp_A, 1'b1, mantis_A[MANTIS_SIZE:0]}:
-                                                      {sign_A, exp_A, 1'b1, mantis_A[MANTIS_SIZE-1:0]}:
-				    		                          {sign_B, exp_B, 1'b1, mantis_B[MANTIS_SIZE-1:0]};
+                                                      {sign_A&sign_B, exp_A, 1'b1, mantis_A[MANTIS_SIZE-2:0]}:
+                                                      {sign_A, exp_A, 1'b1, mantis_A[MANTIS_SIZE-2:0]}:
+				    		                          {sign_B, exp_B, 1'b1, mantis_B[MANTIS_SIZE-2:0]};
     end
     else if (type_A == ZERO && type_B == ZERO) begin
         special_case = 1'b1;
@@ -55,12 +55,12 @@ always @(*) begin
     end
     else if (type_A == ZERO || type_B == NAN) begin
         special_case = 1'b1;
-        result       = type_B == NAN ? {sign_B, exp_B, 1'b1, mantis_B[MANTIS_SIZE-1:0]}:
+        result       = type_B == NAN ? {sign_B, exp_B, 1'b1, mantis_B[MANTIS_SIZE-2:0]}:
 				                       {sign_B, exp_B, mantis_B};
     end
     else if (type_B == ZERO || type_A == NAN) begin
         special_case = 1'b1;
-        result       = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[MANTIS_SIZE-1:0]}: 
+        result       = type_A == NAN ? {sign_A, exp_A, 1'b1, mantis_A[MANTIS_SIZE-2:0]}: 
 		                               {sign_A, exp_A, mantis_A};
     end
     else if (type_A == INF) begin

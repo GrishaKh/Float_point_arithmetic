@@ -14,17 +14,21 @@ module standardizer
     mantis_out
 );
 
+// Inputs
 input [ EXP_SIZE      -1:0] exp_in;
 input [(MANTIS_SIZE+3)-1:0] mantis_in;
 input                       loss;
 input                       operator_in;
 
+// Outputs
 output [EXP_SIZE   -1:0] exp_out;
 output [MANTIS_SIZE-1:0] mantis_out;
 
+//Wires
 wire [ EXP_SIZE      -1:0] exp_norm;
 wire [(MANTIS_SIZE+3)-1:0] mantis_norm;
 
+// Instances
 normalize __normalize
 (
     .exp_in     (exp_in),

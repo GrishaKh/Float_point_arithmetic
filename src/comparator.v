@@ -10,14 +10,17 @@ module comparator
     out_code
 );
 
+// Inputs
 input [SIZE-1:0] in_A;
 input [SIZE-1:0] in_B;
 
+//Outputs
 output [1:0] out_code;
 
-parameter [1:0] EQUAL = 2'b00;
-parameter [1:0] GREAT = 2'b01;
-parameter [1:0] SMALL = 2'b10;
+// Local parameters
+localparam [1:0] EQUAL = 2'b00;
+localparam [1:0] GREAT = 2'b01;
+localparam [1:0] SMALL = 2'b10;
 
 assign out_code = (in_A == in_B) ? EQUAL:
                   (in_A <  in_B) ? GREAT:

@@ -2,8 +2,8 @@
 
 module normalize
 #(
-    parameter SIZE_MANTIS = 26,
-    parameter SIZE_EXP = 8
+    parameter MANTIS_SIZE = `MANTIS_SIZE+3,
+    parameter EXP_SIZE    = `EXP_SIZE
 )
 (
     exp_in,
@@ -12,38 +12,42 @@ module normalize
     mantis_out
 );
 
+// Inputs
+input [EXP_SIZE-1:0]    exp_in;
+input [MANTIS_SIZE-1:0] mantis_in;
 
-input [SIZE_EXP-1:0]    exp_in;
-input [SIZE_MANTIS-1:0] mantis_in;
+// Outputs
+output reg [EXP_SIZE-1:0]    exp_out;
+output reg [MANTIS_SIZE-1:0] mantis_out;
 
-output reg [SIZE_EXP-1:0]    exp_out;
-output reg [SIZE_MANTIS-1:0] mantis_out;
-
-reg [SIZE_MANTIS-1:0] mantis_tmp;
+// Regs
+reg [MANTIS_SIZE-1:0] mantis_tmp;
 reg [5:0]             shift;
 
+// Functions
 function [5:0] shift_mantis;
-    input [SIZE_MANTIS-1:0] bits;
+    input [MANTIS_SIZE-1:0] bits;
 
     reg [5:0] res;
     integer   i;
 
     begin
         res = 0;
-        for (i = 0; i < SIZE_MANTIS; i = i + 1)
+        for (i = 0; i < MANTIS_SIZE; i = i + 1)
         begin
             if (!res) begin
-                if (bits[SIZE_MANTIS-1-i]) begin
+                if (bits[MANTIS_SIZE-1-i]) begin
                     res = i;
                 end
             end
         end
         shift_mantis = res;
     end
-endfunction
+endfunction // shift_mantis
 
+// Combinational block
 always @(*) begin
-    if (mantis_in[SIZE_MANTIS-1]) shift = 0;
+    if (mantis_in[MANTIS_SIZE-1]) shift = 0;
     else                          shift = shift_mantis(mantis_in);
 
     if (exp_in >= shift) begin

@@ -107,7 +107,7 @@ __shifter
 
 comparator
 #(
-    .SIZE(26)
+    .SIZE(MANTIS_SIZE+3)
 )
 __comparator_mantis
 (

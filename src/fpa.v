@@ -37,7 +37,7 @@ wire [(MANTIS_SIZE+3)-1:0] mantis_adder;
 wire [ MANTIS_SIZE   -1:0] mantis_out;
 wire [2:0]                 type_A;
 wire [2:0]                 type_B;
-wire [31:0]                special_result;
+wire [(1+EXP_SIZE+MANTIS_SIZE)-1:0] special_result;
 wire                       special_case;
 wire                       loss_preadder;
 wire                       loss_adder;

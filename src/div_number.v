@@ -12,12 +12,15 @@ module div_number
     mantis
 );
 
+// Inputs
 input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number;
 
+// Outputs
 output                   sign;
 output [EXP_SIZE   -1:0] exp;
 output [MANTIS_SIZE-1:0] mantis;
 
+// Assignments
 assign {sign, exp, mantis} = number;
 
 endmodule // div_number
