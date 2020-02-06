@@ -4,8 +4,8 @@ module shifter
 #(
     parameter EXP_SIZE       = `EXP_SIZE,
     parameter MANTIS_SIZE    = `MANTIS_SIZE,
-    parameter DIRECTION      = 0, // 0-left, 1-right
-    parameter MODE           = 0  // 0-diff, 1-exp_target
+    parameter DIRECTION      = 0, // 0 - left shift, 1 - right shift
+    parameter MODE           = 0  // 0 - diff,       1 - exp_target
 )
 (
     exp,
@@ -17,14 +17,14 @@ module shifter
 );
 
 // Inputs
-input [ EXP_SIZE      -1:0] exp;
-input [ EXP_SIZE      -1:0] exp_target_or_diff;
-input [(MANTIS_SIZE+3)-1:0] mantis;
+input [ EXP_SIZE      -1:0] exp;                // exponent
+input [ EXP_SIZE      -1:0] exp_target_or_diff; // target exponent or shift quantity depending on the "MODE"
+input [(MANTIS_SIZE+3)-1:0] mantis;             // mantissa
 
 // Outputs
-output [ EXP_SIZE      -1:0] exp_out;
-output [(MANTIS_SIZE+3)-1:0] mantis_out;
-output                       loss;
+output [ EXP_SIZE      -1:0] exp_out;    // exponent output
+output [(MANTIS_SIZE+3)-1:0] mantis_out; // mantissa output
+output                       loss;       // loss detector
 //output overflow;
 
 // Wires

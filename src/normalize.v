@@ -13,35 +13,34 @@ module normalize
 );
 
 // Inputs
-input [EXP_SIZE-1:0]    exp_in;
-input [MANTIS_SIZE-1:0] mantis_in;
+input [EXP_SIZE-1:0]    exp_in;    // exponent of the number to be normalization
+input [MANTIS_SIZE-1:0] mantis_in; // mantissa of the number to be normalization
 
 // Outputs
-output reg [EXP_SIZE-1:0]    exp_out;
-output reg [MANTIS_SIZE-1:0] mantis_out;
+output reg [EXP_SIZE-1:0]    exp_out;    // normalized exponent
+output reg [MANTIS_SIZE-1:0] mantis_out; // normalized mantissa
 
 // Regs
-reg [MANTIS_SIZE-1:0] mantis_tmp;
-reg [5:0]             shift;
+reg [5:0] shift; // shift quantity
 
-// Functions
+// Function for compute shift quantity
 function [5:0] shift_mantis;
-    input [MANTIS_SIZE-1:0] bits;
+    input [MANTIS_SIZE-1:0] bits; // input data
 
-    reg [5:0] res;
+    reg [5:0] res; // result
     integer   i;
 
     begin
         res = 0;
         for (i = 0; i < MANTIS_SIZE; i = i + 1)
         begin
-            if (!res) begin
+            if (!res) begin // if the value is still 0: continue, else the "res" is equal final result
                 if (bits[MANTIS_SIZE-1-i]) begin
                     res = i;
                 end
             end
         end
-        shift_mantis = res;
+        shift_mantis = res; // return result
     end
 endfunction // shift_mantis
 
@@ -50,16 +49,14 @@ always @(*) begin
     if (mantis_in[MANTIS_SIZE-1]) shift = 0;
     else                          shift = shift_mantis(mantis_in);
 
-    if (exp_in >= shift) begin
-        mantis_tmp = (mantis_in << shift);
+    if (exp_in >= shift) begin // if the exponent greater than or equal to shift quantity
+        mantis_out = (mantis_in << shift);
         exp_out = (exp_in - shift);
     end
-    else begin
-        mantis_tmp = (mantis_in << exp_in);
+    else begin                 // if the exponent smaller than shift quantity
+        mantis_out = (mantis_in << exp_in);
         exp_out = 0;
     end
-
-    mantis_out = mantis_tmp;
 end
 
 endmodule // normalize

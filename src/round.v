@@ -15,19 +15,19 @@ module round
 );
 
 // Inputs
-input [ EXP_SIZE      -1:0] exp;
-input [(MANTIS_SIZE+3)-1:0] mantis;
-input                       loss;
-input                       operator;
+input [ EXP_SIZE      -1:0] exp;      // exponent of the number for rounding
+input [(MANTIS_SIZE+3)-1:0] mantis;   // mantissa of the number for rounding
+input                       loss;     // loss rounding
+input                       operator; // add or sub
 
 //Outputs
-output [EXP_SIZE   -1:0] exp_out;
-output [MANTIS_SIZE-1:0] mantis_out;
+output [EXP_SIZE   -1:0] exp_out;    // rounded exponent
+output [MANTIS_SIZE-1:0] mantis_out; // rounded mantissa
 
 // Wires
-wire [MANTIS_SIZE:0] mantis_tmp;
-wire                 carry;
-wire [1:0]           r_bits;
+wire [MANTIS_SIZE:0] mantis_tmp; // temporay mantiss
+wire                 carry;      // carry bit
+wire [1:0]           r_bits;     // rounidng bits
 wire                 s;
 // wire [25:0] mantis_shifted;
 

@@ -11,18 +11,18 @@ module extender
 );
 
 // Inputs
-input [MANTIS_SIZE-1:0] mantis;
-input [2:0]             type_number;
+input [MANTIS_SIZE-1:0] mantis;      // extendable mantissa
+input [2:0]             type_number; // type of the extendable number
 
 // Outputs
-output [(MANTIS_SIZE+3)-1:0] mantis_out;
+output [(MANTIS_SIZE+3)-1:0] mantis_out; // extended mantissa
 
 // Local parameters
 localparam [2:0] NORMAL = 3'b011;
 
 // Assignments
-assign mantis_out = type_number == NORMAL ? 
-                    {1'b1, mantis, 2'b00} : 
-                    {mantis, 3'b000};
+assign mantis_out = type_number == NORMAL ? // extend mantissa depending on type of the number
+                    {1'b1, mantis, 2'b00} : // if type is normal
+                    {mantis, 3'b000};       // if type is subnormal
 
 endmodule // extender

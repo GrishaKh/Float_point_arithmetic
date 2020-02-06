@@ -13,42 +13,42 @@ module fpa
 
 
 // Inputs
-input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A;
-input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A; // the first operand
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B; // the second operand
 
 // Outputs
-output [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out;
+output [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out; // result of the computation
 
 // Wires
-wire                       sign_of_great;
-wire                       sign_of_small;
-wire [ EXP_SIZE      -1:0] exp_A;
-wire [ EXP_SIZE      -1:0] exp_B;
-wire [ EXP_SIZE      -1:0] exp_preadder;
-wire [ EXP_SIZE      -1:0] exp_adder;
-wire [ EXP_SIZE      -1:0] exp_out;
-wire [(MANTIS_SIZE+3)-1:0] ext_mantis_A;
-wire [(MANTIS_SIZE+3)-1:0] ext_mantis_B;
-wire [(MANTIS_SIZE+3)-1:0] mantis_great;
-wire [(MANTIS_SIZE+3)-1:0] mantis_small;
-wire [ MANTIS_SIZE   -1:0] mantis_A;
-wire [ MANTIS_SIZE   -1:0] mantis_B;
-wire [(MANTIS_SIZE+3)-1:0] mantis_adder;
-wire [ MANTIS_SIZE   -1:0] mantis_out;
-wire [2:0]                 type_A;
-wire [2:0]                 type_B;
-wire [(1+EXP_SIZE+MANTIS_SIZE)-1:0] special_result;
-wire                       special_case;
-wire                       loss_preadder;
-wire                       loss_adder;
-wire                       loss;
-wire                       operator_adder;
-wire                       sign_adder;
+wire                       sign_of_great;  // sign of the great number
+wire                       sign_of_small;  // sign of the small number
+wire [ EXP_SIZE      -1:0] exp_A;          // exponent of the first operand
+wire [ EXP_SIZE      -1:0] exp_B;          // exponent of the second operand
+wire [ EXP_SIZE      -1:0] exp_preadder;   // exponent output from preadder
+wire [ EXP_SIZE      -1:0] exp_adder;      // exponent output from adder
+wire [ EXP_SIZE      -1:0] exp_out;        // exponent of the result
+wire [(MANTIS_SIZE+3)-1:0] ext_mantis_A;   // extended mantissa of the first operand
+wire [(MANTIS_SIZE+3)-1:0] ext_mantis_B;   // extended mantissa of the second operand
+wire [(MANTIS_SIZE+3)-1:0] mantis_great;   // great mantissa
+wire [(MANTIS_SIZE+3)-1:0] mantis_small;   // small mantissa
+wire [ MANTIS_SIZE   -1:0] mantis_A;       // mantissa of the first operand
+wire [ MANTIS_SIZE   -1:0] mantis_B;       // mantissa of the second operand
+wire [(MANTIS_SIZE+3)-1:0] mantis_adder;   // mantissa output from adder
+wire [ MANTIS_SIZE   -1:0] mantis_out;     // mantissa of the result
+wire [2:0]                 type_A;         // type of the first operand (zero, infinity, subnormal, normal, nan)
+wire [2:0]                 type_B;         // type of the second operand (zero, infinity, subnormal, normal, nan)
+wire                       special_case;   // Indicates a special case
+wire                       loss_preadder;  // loss output from the preadder
+wire                       loss_adder;     // loss output from the adder
+wire                       loss;           // loss result
+wire                       operator_adder; // output from adder, add or sub
+wire                       sign_adder;     // sign output from the adder
+wire [(1+EXP_SIZE+MANTIS_SIZE)-1:0] special_result; // computation result is equal to the special result, if there is a special case
 
 // Assignes
-assign loss       = loss_preadder | loss_adder;
+assign loss       = loss_preadder | loss_adder;                       // loss detection
 assign number_out = special_case ? special_result :
-                                   {sign_adder, exp_out, mantis_out};
+                                   {sign_adder, exp_out, mantis_out}; // result creation
 
 // Instances
 init_number __number_A

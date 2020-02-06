@@ -18,17 +18,17 @@ module shift_selector
 );
 
 // Inputs
-input                       comp_code;
-input [ EXP_SIZE      -1:0] exp_A;
-input [ EXP_SIZE      -1:0] exp_B;
-input [(MANTIS_SIZE+3)-1:0] mantis_A;
-input [(MANTIS_SIZE+3)-1:0] mantis_B;
+input                       comp_code; // input code of comparator
+input [ EXP_SIZE      -1:0] exp_A;     // exponent of first number
+input [ EXP_SIZE      -1:0] exp_B;     // exponent of second number
+input [(MANTIS_SIZE+3)-1:0] mantis_A;  // mantissa of first number
+input [(MANTIS_SIZE+3)-1:0] mantis_B;  // mantissa of second number
 
 // Outputs
-output reg [ EXP_SIZE      -1:0] exp_shift;
-output reg [ EXP_SIZE      -1:0] exp_out;
-output reg [(MANTIS_SIZE+3)-1:0] mantis_shift;
-output reg [(MANTIS_SIZE+3)-1:0] mantis_out;
+output reg [ EXP_SIZE      -1:0] exp_shift;    // shiftable exponent
+output reg [ EXP_SIZE      -1:0] exp_out;      // nonshiftable exponent
+output reg [(MANTIS_SIZE+3)-1:0] mantis_shift; // shiftable mantis
+output reg [(MANTIS_SIZE+3)-1:0] mantis_out;   // nonshiftable mantis
 
 // Combinational block
 always @(*) begin

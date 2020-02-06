@@ -15,14 +15,14 @@ module init_number
 );
 
 // Inputs
-input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number;
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number; // input number
 
 // Outputs
-output                       sign;
-output [EXP_SIZE       -1:0] exp;
-output [ MANTIS_SIZE   -1:0] mantis;
-output [(MANTIS_SIZE+3)-1:0] ext_mantis;
-output [2:0]                 type;
+output                       sign;       // sing of the input number
+output [EXP_SIZE       -1:0] exp;        // exponent of the input number
+output [ MANTIS_SIZE   -1:0] mantis;     // mantissa of the input number
+output [(MANTIS_SIZE+3)-1:0] ext_mantis; // extended mantissa
+output [2:0]                 type;       // type of the input number
 
 //Instances
 div_number __div_number

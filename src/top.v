@@ -14,13 +14,13 @@ module top
 );
 
 // Inputs
-input        clk;
-input        rst;
-input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A;
-input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B;
+input                                clk;      // clock
+input                                rst;      // reset
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A; // first number
+input [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_B; // second number
 
 // Outputs
-output reg [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out;
+output reg [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_out; // result
 
 // Wires and regs
 reg  [(1+EXP_SIZE+MANTIS_SIZE)-1:0] number_A_reg;

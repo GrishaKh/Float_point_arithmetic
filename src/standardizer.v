@@ -15,18 +15,18 @@ module standardizer
 );
 
 // Inputs
-input [ EXP_SIZE      -1:0] exp_in;
-input [(MANTIS_SIZE+3)-1:0] mantis_in;
-input                       loss;
-input                       operator_in;
+input [ EXP_SIZE      -1:0] exp_in;      // input exponent
+input [(MANTIS_SIZE+3)-1:0] mantis_in;   // input mantissa
+input                       loss;        // lost detector
+input                       operator_in; // input operator (+ or -)
 
 // Outputs
-output [EXP_SIZE   -1:0] exp_out;
-output [MANTIS_SIZE-1:0] mantis_out;
+output [EXP_SIZE   -1:0] exp_out;    // exponent output
+output [MANTIS_SIZE-1:0] mantis_out; // mantissa output
 
 //Wires
-wire [ EXP_SIZE      -1:0] exp_norm;
-wire [(MANTIS_SIZE+3)-1:0] mantis_norm;
+wire [ EXP_SIZE      -1:0] exp_norm;    // normalized exponent
+wire [(MANTIS_SIZE+3)-1:0] mantis_norm; // normalized mantissa
 
 // Instances
 normalize __normalize

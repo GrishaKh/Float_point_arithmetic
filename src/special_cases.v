@@ -26,18 +26,18 @@ parameter [2:0] ZERO      = 3'b000,
                 NAN       = 3'b100;
 
 // Inputs
-input                   sign_A;
-input                   sign_B;
-input [EXP_SIZE   -1:0] exp_A;
-input [EXP_SIZE   -1:0] exp_B;
-input [MANTIS_SIZE-1:0] mantis_A;
-input [MANTIS_SIZE-1:0] mantis_B;
-input [2:0]             type_A;
-input [2:0]             type_B;
+input                   sign_A;   // sign of first number
+input                   sign_B;   // sign of second number
+input [EXP_SIZE   -1:0] exp_A;    // exponent of first number
+input [EXP_SIZE   -1:0] exp_B;    // exponent of second number
+input [MANTIS_SIZE-1:0] mantis_A; // mantissa of first number
+input [MANTIS_SIZE-1:0] mantis_B; // mantissa of second number
+input [2:0]             type_A;   // type of first number
+input [2:0]             type_B;   // type of second number
 
 // Outputs
-output reg [(1+EXP_SIZE+MANTIS_SIZE)-1:0] result;
-output reg                                special_case;
+output reg [(1+EXP_SIZE+MANTIS_SIZE)-1:0] result;       // result
+output reg                                special_case; // special case detector
 
 // Combinational block
 always @(*) begin

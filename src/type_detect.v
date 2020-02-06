@@ -12,11 +12,11 @@ module type_detect
 );
 
 // Inputs
-input [EXP_SIZE   -1:0] exp;
-input [MANTIS_SIZE-1:0] mantis;
+input [EXP_SIZE   -1:0] exp;    // input exponent
+input [MANTIS_SIZE-1:0] mantis; // input mantissa
 
 // Outputs
-output reg [2:0] type;
+output reg [2:0] type; // output type
 
 parameter [2:0] ZERO      = 3'b000,
                 INF       = 3'b001,

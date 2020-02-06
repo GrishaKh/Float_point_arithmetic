@@ -41,30 +41,30 @@ module preadder
 );
 
 // Inputs
-input                       sign_A;
-input                       sign_B;
-input [ EXP_SIZE      -1:0] exp_A;
-input [ EXP_SIZE      -1:0] exp_B;
-input [(MANTIS_SIZE+3)-1:0] mantis_A;
-input [(MANTIS_SIZE+3)-1:0] mantis_B;
+input                       sign_A;   // sign of the first operand
+input                       sign_B;   // sign of the second operand
+input [ EXP_SIZE      -1:0] exp_A;    // exponent of the first operand
+input [ EXP_SIZE      -1:0] exp_B;    // exponent of the second operand
+input [(MANTIS_SIZE+3)-1:0] mantis_A; // mantissa of the first operand
+input [(MANTIS_SIZE+3)-1:0] mantis_B; // mantissa of the second operand
 
 // Outputs
-output                       sign_of_great;
-output                       sign_of_small;
-output [ EXP_SIZE      -1:0] exp;
-output [(MANTIS_SIZE+3)-1:0] mantis_great;
-output [(MANTIS_SIZE+3)-1:0] mantis_small;
-output                       loss;
+output                       sign_of_great; // sign of the great number
+output                       sign_of_small; // sign of the small number
+output [ EXP_SIZE      -1:0] exp;           // exponent
+output [(MANTIS_SIZE+3)-1:0] mantis_great;  // grater mantissa
+output [(MANTIS_SIZE+3)-1:0] mantis_small;  // smaller mantissa
+output                       loss;          // loss preadder
 
 // Wires
-wire [(MANTIS_SIZE+3)-1:0] mantis_shift;
-wire [(MANTIS_SIZE+3)-1:0] mantis_nonshift;
-wire [(MANTIS_SIZE+3)-1:0] mantis_shifted;
-wire [ EXP_SIZE      -1:0] exp_shift;
-wire [1:0]                 code_exp;
-wire [1:0]                 code_mantis;
-wire                       mantis_swap_code;
-wire                       shift_select_code;
+wire [(MANTIS_SIZE+3)-1:0] mantis_shift;      // mantissa, which must be shifted
+wire [(MANTIS_SIZE+3)-1:0] mantis_nonshift;   // mantissa, which should not be shifted
+wire [(MANTIS_SIZE+3)-1:0] mantis_shifted;    // shifted mantissa
+wire [ EXP_SIZE      -1:0] exp_shift;         // exponent that belongs to the shiftable mantis
+wire [1:0]                 code_exp;          // comparator output that compares the exponents
+wire [1:0]                 code_mantis;       // comparator output that compares shiftable and nonshiftable manitisses
+wire                       mantis_swap_code;  // mantissa swap detector output
+wire                       shift_select_code; // output of the shift selector
 
 // Assignments
 assign shift_select_code = code_exp[1]&(~code_exp[0]);
